@@ -6,7 +6,7 @@ export enum NivellLimitacioDietaProteica {
     sense_limitacio = 'sense limitació' /* no prohibeix! */,
     hinduisme_no_vegetariana = 'hindú no vegetariana' /* Sense porc ni vacum */,
     aviram_pisci_vegetariana = 'aviram-pisci-vegetariana',
-    quaresma = 'quaresma' /* aviram_pisci_vegetariana, però exclou l'anec i l'oca */,
+    quaresma = 'quaresma' /* aviram_pisci_vegetariana, però exclou l'ànec i l'oca */,
     pisci_vegetariana = 'pisci-vegetariana',
     lacto_ovo_vegetariana = 'lacto-ovo-vegetariana',
     lacto_vegetariana = 'lacto-vegetariana' /* exclou els ous */,
@@ -38,19 +38,7 @@ export const ajutDietesProteiques: {[dieta in StrNivellLimitacioDietaProteica]: 
 }
 
 
-export const enum AltresLimitacionsDieta {
-    paleo = 'paleo (sense cereals ni làctics)' /* sense cereals ni làctics */,
-    celliac = 'celiac' /* sense gluten: blat, l'ordi, sègol, civada, blat kamut, espelta */,
-    islamic = 'islàmica',
-    /* islàmica. A més d'abstemia: NO: porc ni senglar, sang, rèptils, depredadors (aus amb garres o mamifers amb ullals),
-        insectes, aràcnids, rates i ratolins, cavalls, simis, ases, rucs, anguiles */
-    judaisme = 'judaisme', /* sense porc, conill, llebre, esquirol, gos, gat, camell, cavall, estruç, faisà,
-        aus rapinyaires o carronyeres... Del mar només peixos amb aletes i escates (exclou mol·luscos, marisc, tauró...) */
-        /* COMPTE! A més, no permet barreja de carn i làctics */
-}
-
-
-/* mínima proteïna animal */
+/* mínima proteïna animal (racomanació per a les receptes) */
 /*
     flexitariana_reducetariana = 'flexitariana o reducetariana' ,
 

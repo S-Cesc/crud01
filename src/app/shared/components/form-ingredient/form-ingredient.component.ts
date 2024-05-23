@@ -6,7 +6,7 @@ import {MatButtonModule} from '@angular/material/button';
 import {MatFormFieldModule} from '@angular/material/form-field';
 import { IIngredient } from '../../../model/interfaces';
 import { NomIdiomes } from '../../../model/types';
-import { Nomidioma, StrIdiomes, NivellLimitacioDietaProteica, getNamesNivellLimitacioDietaProteica, ajutDietesProteiques, StrNivellLimitacioDietaProteica, getNivellsLimitacioDietaProteica } from '../../../model/enums';
+import { Nomidioma, StrIdiomes, NivellLimitacioDietaProteica, ajutDietesProteiques, StrNivellLimitacioDietaProteica, getNivellsLimitacioDietaProteica } from '../../../model/enums';
 import { CommonModule } from '@angular/common';
 import { isNullOrEmpty } from '../../../util/util';
 
@@ -44,7 +44,6 @@ export class FormIngredientComponent implements OnInit {
   @Output() formChanged = new EventEmitter<void>();
 
   strLan: Nomidioma[];
-  namesNivellLimitacioDietaProteica: string[];
   nivellsLimitacioDietaProteica: [string, NivellLimitacioDietaProteica][];
   textDieta: string;
   ingredientForm: FormGroup;
@@ -57,7 +56,6 @@ export class FormIngredientComponent implements OnInit {
     this.textHTML = "";
     this.strLan = [];
     StrIdiomes.forEach(e => this.strLan.push(e));
-    this.namesNivellLimitacioDietaProteica = getNamesNivellLimitacioDietaProteica();
     this.nivellsLimitacioDietaProteica = getNivellsLimitacioDietaProteica();
     this.textDieta = "";
   }
