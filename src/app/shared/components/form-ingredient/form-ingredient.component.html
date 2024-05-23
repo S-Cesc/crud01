@@ -17,16 +17,28 @@
           <input type="text" class="sencer" id="{{item}}" formControlName="{{item}}"> 
         }
       </div>
-      <label for="dietaProteica">No apte per a dieta proteica: </label>
-      <select id="dietaProteica" formControlName="dietaProteica" (change)="changeDiet($event)">
-        @for (item of StrNivellLimitacioDietaProteica; track item) {
-          <option [value]="item">{{item}}</option>
-        }
-      </select>
+      <mat-form-field class="dietaProteica">
+        <mat-label for="dietaProteica">Evitar en dieta proteica: </mat-label>
+        <mat-select matNativeControl id="dietaProteica" color="error" formControlName="dietaProteica" (selectionChange)="changeDiet($event)">
+          @for (item of nivellsLimitacioDietaProteica; track item[0]) {
+            <mat-option [value]="item[0]">{{item[1]}}</mat-option>
+          }
+        </mat-select>
+      </mat-form-field>
+      <div class="textDieta">
+        <span>{{textDieta}}</span>
+      </div>
+      <div class="restriccions">
+        <mat-slide-toggle formControlName="noDiabetics" color="warn" (toggle)="onToggleNoDiabetics($event)">No apte diabètics</mat-slide-toggle>
+        <mat-slide-toggle formControlName="noCeliacs" color="warn" (toggle)="onToggleNoCeliacs($event)">No apte celiacs</mat-slide-toggle>
+        <mat-slide-toggle formControlName="haram" color="warn" (toggle)="onToggleHaram($event)">Haram</mat-slide-toggle>
+        <mat-slide-toggle formControlName="taref" color="warn" (toggle)="onToggleTaref($event)">Taref</mat-slide-toggle>
+        <mat-slide-toggle formControlName="noPaleo" color="warn" (toggle)="onToggleNoPaleo($event)">No apte dieta paleo</mat-slide-toggle>
+      </div>
       <textarea placeholder="descripció" formControlName="descripcio"></textarea><br />
     </div>
-    <button type="button" [disabled]="!pendingForm()" (click)="submitButton()">Desa</button>
-    <button type="button" (click)="cancelButton()">Cancel·la</button>
+    <button mat-flat-button color="accent" type="button" [disabled]="!pendingForm()" (click)="submitButton()">Desa</button>
+    <button mat-flat-button color="warn" type="button" (click)="cancelButton()">Cancel·la</button>
   </div>
 </form>
 <div>

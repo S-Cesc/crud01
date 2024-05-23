@@ -4,19 +4,23 @@
     <div class="left-side">
       <ul class="ingredients">
         <li *ngFor="let ingredient of ingredients" >
-          <a routerLink="/ingredient-detail/{{ingredient.id}}">
-            <!-- (click)="editDetail(ingredient.id)" -->
-              <span class="badge">
-                @if (hasId(ingredient)) {
-                  {{ingredient.id}}
-                }
-                @else {
-                  <span>no-code</span>
-                }
-              </span> {{ingredient.nom}}
-          </a>
-          <button type="button" class="delete" title="esborrar ingredient"
-          (click)="deleteIngredient(ingredient)">x</button>
+          <div>
+            <a routerLink="/ingredient-detail/{{ingredient.id}}">
+              <!-- (click)="editDetail(ingredient.id)" -->
+                <span class="badge">
+                  @if (hasId(ingredient)) {
+                    {{ingredient.id}}
+                  }
+                  @else {
+                    <span>no-code</span>
+                  }
+                </span> {{ingredient.nom}}
+            </a>
+            <button mat-fab color="primary" class="delete" title="Esborrar ingredient"
+              (click)="deleteIngredient(ingredient)">
+                <mat-icon>delete</mat-icon>
+            </button>
+          </div>
         </li>
       </ul>
     </div>

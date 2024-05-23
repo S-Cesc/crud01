@@ -1,10 +1,18 @@
 import { Component, Input, OnInit, Output, EventEmitter, NgModule } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
+import {MatInputModule} from '@angular/material/input';
+import {MatSelectModule} from '@angular/material/select';
+import {MatButtonModule} from '@angular/material/button';
+import {MatFormFieldModule} from '@angular/material/form-field';
 import { IIngredient } from '../../../model/interfaces';
 import { NomIdiomes } from '../../../model/types';
-import { Nomidioma, StrIdiomes, NivellLimitacioDietaProteica, getNamesNivellLimitacioDietaProteica, ajutDietesProteiques } from '../../../model/enums';
+import { Nomidioma, StrIdiomes, NivellLimitacioDietaProteica, getNamesNivellLimitacioDietaProteica, ajutDietesProteiques, StrNivellLimitacioDietaProteica, getNivellsLimitacioDietaProteica } from '../../../model/enums';
 import { CommonModule } from '@angular/common';
 import { isNullOrEmpty } from '../../../util/util';
+
+
+import { MatSlideToggleModule } from '@angular/material/slide-toggle';
+import { __values } from 'tslib';
 
 @Component({
   selector: 'app-form-ingredient',
@@ -13,6 +21,8 @@ import { isNullOrEmpty } from '../../../util/util';
       CommonModule,
       FormsModule,
       ReactiveFormsModule,
+      MatFormFieldModule, MatSelectModule, MatInputModule,
+      MatSlideToggleModule, MatButtonModule
   ],
   templateUrl: './form-ingredient.component.html',
   styleUrl: './form-ingredient.component.scss'
@@ -34,7 +44,9 @@ export class FormIngredientComponent implements OnInit {
   @Output() formChanged = new EventEmitter<void>();
 
   strLan: Nomidioma[];
-  StrNivellLimitacioDietaProteica: string[];
+  namesNivellLimitacioDietaProteica: string[];
+  nivellsLimitacioDietaProteica: [string, NivellLimitacioDietaProteica][];
+  textDieta: string;
   ingredientForm: FormGroup;
 
   private _clearForm: boolean;
@@ -45,7 +57,9 @@ export class FormIngredientComponent implements OnInit {
     this.textHTML = "";
     this.strLan = [];
     StrIdiomes.forEach(e => this.strLan.push(e));
-    this.StrNivellLimitacioDietaProteica = getNamesNivellLimitacioDietaProteica();
+    this.namesNivellLimitacioDietaProteica = getNamesNivellLimitacioDietaProteica();
+    this.nivellsLimitacioDietaProteica = getNivellsLimitacioDietaProteica();
+    this.textDieta = "";
   }
 
   ngOnInit(): void {
@@ -62,7 +76,12 @@ export class FormIngredientComponent implements OnInit {
       nom: new FormControl<string>('', Validators.required),
       idioma: new FormControl<string>('', Validators.required),
       nom_idiomes: langSubform,
-      dietaProteica: new FormControl<string>(''),
+      dietaProteica: new FormControl<string>('', Validators.required),
+      noDiabetics : new FormControl<boolean>(false),
+      noCeliacs : new FormControl<boolean>(false),
+      haram : new FormControl<boolean>(false),
+      taref : new FormControl<boolean>(false),
+      noPaleo : new FormControl<boolean>(false),
       descripcio: new FormControl<string>('')
     });
   }
@@ -80,6 +99,26 @@ export class FormIngredientComponent implements OnInit {
     });
     this.ingredientForm.controls["dietaProteica"].setValue(ing.dieta);
     this.ingredientForm.controls["descripcio"].setValue(ing.descripció);
+    if (ing.dieta !== undefined) {      
+      this.textDieta = ajutDietesProteiques[ing.dieta];
+    }
+    if (ing.exclouDiabetic !== undefined) {
+      this.ingredientForm.controls["noDiabetics"].setValue(ing.exclouDiabetic);
+    }
+    if (ing.exclouCelliac !== undefined) {
+      this.ingredientForm.controls["noCeliacs"].setValue(ing.exclouCelliac);
+    }
+    if (ing.exclouIslamic !== undefined) {
+      this.ingredientForm.controls["haram"].setValue(ing.exclouIslamic);
+    }
+    if (ing.exclouJueu !== undefined) {
+      this.ingredientForm.controls["taref"].setValue(ing.exclouJueu);
+    }
+    if (ing.exclouPaleo) {
+      this.ingredientForm.controls["noPaleo"].setValue(ing.exclouPaleo);
+    }
+
+    this.changeDietValue(ing.dieta);
   }
 
   public pendingForm() :boolean {
@@ -96,9 +135,30 @@ export class FormIngredientComponent implements OnInit {
   }
 
   public changeDiet(event: any) {
-    const actualValue = event.target.value;
-    console.log(actualValue);    
+    this.changeDietValue(event.value);
   }
+
+  private changeDietValue(actualValue: any) {
+    if (actualValue === undefined) {
+      this.textDieta = "Seleccioneu el màxim nivell de dieta on l'ingredient no és acceptable.";
+    } else {      
+      const prefix = (actualValue as StrNivellLimitacioDietaProteica === "sense_limitacio") ? "" : "No apte en: ";
+      this.textDieta = prefix + ajutDietesProteiques[actualValue as StrNivellLimitacioDietaProteica];
+    }
+  }
+
+  public onToggleNoDiabetics(event: any) {
+    console.log(event);
+  }
+  public onToggleNoCeliacs(event: any) {
+  }
+  public onToggleHaram(event: any) {
+  }
+  public onToggleTaref(event: any) {
+  }
+  public onToggleNoPaleo(event: any) {
+  }
+
 
   public submitButton(): void {
     function readLangSubform(subForm: any) : NomIdiomes {
@@ -111,14 +171,31 @@ export class FormIngredientComponent implements OnInit {
       return result;
     }
     function readForm(f :FormGroup) :IIngredient {
-      return {
+      let objReturn: IIngredient = {
         "id": f.controls["id"].value,
         "nom": f.controls["nom"].value,
         "lang": f.controls["idioma"].value,
         "nom_idiomes": readLangSubform(f.controls["nom_idiomes"].value),
-        "descripció": f.controls["descripcio"].value,
+        "dieta": f.controls["dietaProteica"].value,
+        "descripció": f.controls["descripcio"].value,        
         "origen": undefined
+      };
+      if (f.controls["noDiabetics"].value !== undefined) {
+        objReturn.exclouDiabetic = f.controls["noDiabetics"].value;
       }
+      if (f.controls["noCeliacs"].value !== undefined) {
+        objReturn["exclouCelliac"] = f.controls["noCeliacs"].value;
+      }
+      if (f.controls["haram"].value !== undefined) {
+        objReturn["exclouIslamic"] = f.controls["haram"].value;
+      }
+      if (f.controls["taref"].value !== undefined) {
+        objReturn["exclouJueu"] = f.controls["taref"].value;
+      }
+      if (f.controls["noPaleo"].value !== undefined) {
+        objReturn["exclouPaleo"] =  f.controls["noPaleo"].value;
+      }
+      return objReturn;
     }
     if (this.ingredientForm.valid) {
       this.submitIngredient.emit(readForm(this.ingredientForm));

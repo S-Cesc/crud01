@@ -10,7 +10,8 @@ export enum NivellLimitacioDietaProteica {
     pisci_vegetariana = 'pisci-vegetariana',
     lacto_ovo_vegetariana = 'lacto-ovo-vegetariana',
     lacto_vegetariana = 'lacto-vegetariana' /* exclou els ous */,
-    vegetariana_vegana = 'vegetariana o vegana',
+    vegetariana = 'vegetariana',
+    vegana = "vegana, o vegetariana estricta",
     pitagorica = 'Pitagòrica: vegana sense fabes'
 }
 export type StrNivellLimitacioDietaProteica = keyof typeof NivellLimitacioDietaProteica;
@@ -18,6 +19,11 @@ export type StrNivellLimitacioDietaProteica = keyof typeof NivellLimitacioDietaP
 export function getNamesNivellLimitacioDietaProteica(): string[] {
     return Object.values(NivellLimitacioDietaProteica);
 }
+
+export function getNivellsLimitacioDietaProteica(): [string, NivellLimitacioDietaProteica][] {
+    return Object.entries(NivellLimitacioDietaProteica);
+}
+
 export const ajutDietesProteiques: {[dieta in StrNivellLimitacioDietaProteica]: string } = {
     "sense_limitacio": 'Sense limitació.',
     "hinduisme_no_vegetariana": 'Sense porc ni vacum.',
@@ -26,7 +32,8 @@ export const ajutDietesProteiques: {[dieta in StrNivellLimitacioDietaProteica]: 
     "pisci_vegetariana": 'Vegetariana amb ous, làctis i peix.',
     "lacto_ovo_vegetariana": 'Vegetariana amb ous i làctics.',
     "lacto_vegetariana": 'Vegetariana amb làctics.',
-    "vegetariana_vegana": "Només vegetals, sense productes d'origen animal.",
+    "vegetariana": "Només vegetals, tot i que pot acceptar mel, fins i tot insectes.",
+    "vegana": "vegetariana estricta, sense aliments d'origen animal.",
     "pitagorica": "Vegana sense fabes."
 }
 

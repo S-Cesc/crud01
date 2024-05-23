@@ -1,6 +1,6 @@
 import { Nomidioma } from "./enums";
 import { NomIdiomes } from "./types";
-import { Taxon, CategoriaRecepta, Tecnica, NivellLimitacioDietaProteica } from "./enums";
+import { Taxon, CategoriaRecepta, Tecnica, StrNivellLimitacioDietaProteica } from "./enums";
 import { unitatTemps, unitatQuantitat, origenRecepta } from "./enums";
 
 export interface IIngredient {
@@ -9,11 +9,12 @@ export interface IIngredient {
     nom: string;
     nom_idiomes: NomIdiomes;
     descripció?: string;
-    dieta?: NivellLimitacioDietaProteica,
-    ExclouCelliac?: boolean,
-    ExclouIslamic?: boolean,
-    ExclouPaleo?: boolean,
-    ExclouJueu?: boolean,
+    dieta: StrNivellLimitacioDietaProteica,
+    exclouDiabetic?: boolean,
+    exclouCelliac?: boolean,
+    exclouIslamic?: boolean,
+    exclouJueu?: boolean,
+    exclouPaleo?: boolean,
     origen?: string[]; /* referència a altres ingredients; permet gestionar alèrgies */
 }
 

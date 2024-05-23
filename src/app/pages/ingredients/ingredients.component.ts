@@ -1,6 +1,8 @@
 import { Component, OnInit, inject } from '@angular/core';
 import { NgFor } from '@angular/common';
 import { Router, RouterLink } from '@angular/router';
+import { MatButtonModule } from '@angular/material/button';
+import { MatIconModule } from '@angular/material/icon';
 import { HeaderComponent } from '../../shared/components/header/header.component';
 import { FooterComponent } from '../../shared/components/footer/footer.component';
 import { LateralMenuComponent } from '../../shared/components/lateral-menu/lateral-menu.component';
@@ -11,7 +13,8 @@ import { serviceStatusResult } from '../../model/services-addons';
 @Component({
   selector: 'app-ingredients',
   standalone: true,
-  imports: [HeaderComponent, LateralMenuComponent, FooterComponent, NgFor, RouterLink],
+  imports: [HeaderComponent, LateralMenuComponent, FooterComponent, 
+          MatButtonModule, MatIconModule, NgFor, RouterLink],
   templateUrl: './ingredients.component.html',
   styleUrl: './ingredients.component.scss'
 })
