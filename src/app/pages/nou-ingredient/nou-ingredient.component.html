@@ -1,0 +1,16 @@
+<app-header [title]="title" [errorTextHTML]="errorTextHTML"></app-header>
+<main class="main">
+  <div class="content">
+    <div class="left-side">
+      <app-form-ingredient
+          [textHTML] = "textHTML"
+          [clearForm] = "clearForm"
+          (submitIngredient)="onSubmitIngredient($event)"
+          (formChanged)="onFormChanged()">
+      </app-form-ingredient>
+    </div>
+    <div class="divider" role="separator" aria-label="Divider"></div>
+    <app-lateral-menu></app-lateral-menu>
+  </div>
+</main>
+<app-footer></app-footer>

@@ -1,0 +1,27 @@
+<app-header [title]="title" [errorTextHTML]="errorTextHTML"></app-header>
+<main class="main">
+  <div class="content">
+    <div class="left-side">
+      <ul class="ingredients">
+        <li *ngFor="let ingredient of ingredients" >
+          <a routerLink="/ingredient-detail/{{ingredient.id}}">
+            <!-- (click)="editDetail(ingredient.id)" -->
+              <span class="badge">
+                @if (hasId(ingredient)) {
+                  {{ingredient.id}}
+                }
+                @else {
+                  <span>no-code</span>
+                }
+              </span> {{ingredient.nom}}
+          </a>
+          <button type="button" class="delete" title="esborrar ingredient"
+          (click)="deleteIngredient(ingredient)">x</button>
+        </li>
+      </ul>
+    </div>
+    <div class="divider" role="separator" aria-label="Divider"></div>
+    <app-lateral-menu></app-lateral-menu>
+  </div>
+</main>
+<app-footer></app-footer>

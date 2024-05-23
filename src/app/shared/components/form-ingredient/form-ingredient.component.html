@@ -1,0 +1,37 @@
+<form [formGroup]="ingredientForm">
+  <div>
+    <div class="grid">
+      <label for="id">Id: </label>
+      <input type="text" id="id" formControlName="id" [readOnly]="true" placeholder="no-code">
+      <label for="nom">Nom: </label>
+      <input type="text" id="nom" formControlName="nom" [required]="true" (keypress)="keyPress($event)">
+      <label for="idioma">Idioma: </label>
+      <select id="idioma" formControlName="idioma" (change)="changeLang($event)">
+        @for (item of strLan; track item) {
+          <option [value]="item">{{item}}</option>
+        }
+      </select>
+      <div formGroupName="nom_idiomes" class="grid">
+        @for (item of strLan; track item) {
+          <label for="{{item}}">{{item}}: </label>
+          <input type="text" class="sencer" id="{{item}}" formControlName="{{item}}"> 
+        }
+      </div>
+      <label for="dietaProteica">No apte per a dieta proteica: </label>
+      <select id="dietaProteica" formControlName="dietaProteica" (change)="changeDiet($event)">
+        @for (item of StrNivellLimitacioDietaProteica; track item) {
+          <option [value]="item">{{item}}</option>
+        }
+      </select>
+      <textarea placeholder="descripció" formControlName="descripcio"></textarea><br />
+    </div>
+    <button type="button" [disabled]="!pendingForm()" (click)="submitButton()">Desa</button>
+    <button type="button" (click)="cancelButton()">Cancel·la</button>
+  </div>
+</form>
+<div>
+  @if (textHTML !== undefined && textHTML != null && textHTML != "") {
+    <p [innerHTML]="textHTML"></p>
+  }
+</div>
+

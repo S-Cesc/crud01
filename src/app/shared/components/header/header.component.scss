@@ -1,0 +1,24 @@
+
+.logo {
+    width: 9.2vw;
+    /* max-width: 9.2vw; */
+    display: inline-block;
+    vertical-align:middle;
+    margin-right: 6vw;
+  }
+.logo img {
+  min-width:10vw; max-width:20vw;
+}
+
+
+  h1 {
+    font-size: 3.125rem;
+    color: var(--gray-900);
+    font-weight: 500;
+    line-height: 100%;
+    letter-spacing: -0.125rem;
+    margin: 0;
+    font-family: "Inter Tight", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+      Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji",
+      "Segoe UI Symbol";
+  }

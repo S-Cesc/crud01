@@ -1,0 +1,18 @@
+<header>
+    <h1>
+      <a class="logo" aria-label="Logo" href="/home">
+        <!--
+          stove top by Abhimanyu Bose from <a href="https://thenounproject.com/browse/icons/term/stove-top/" target="_blank" title="stove top Icons">Noun Project</a> (CC BY 3.0)
+        -->
+        <img src="assets/cooktop.svg" alt="Logo"/>
+      </a>
+      Cooktop crud
+    </h1>
+    <h2>{{ title }}</h2>
+    <div class="errorMessage">
+      @if (errorTextHTML !== undefined && errorTextHTML != null && errorTextHTML != "") {        
+        <span class="errorMessage" [innerHTML]="errorTextHTML"></span>
+      }
+    </div>
+  </header>
+  

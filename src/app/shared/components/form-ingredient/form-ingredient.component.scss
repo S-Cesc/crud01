@@ -1,0 +1,22 @@
+
+form {
+    width: 100%;
+    padding: 0;
+    margin:0;
+  }
+
+form div .grid {
+    width: 100%;
+    padding: 0;
+    margin:0;  
+    display: grid;
+    grid-template-columns: 14% 39% 14% 29%;
+    grid-gap: 10px 10px;
+  }
+  .grid .grid { grid-column: 1 / 5; }
+
+label { grid-column-start: 1; display: table-cell; min-width: 8em; vertical-align: baseline; }
+input { grid-column: 2 / 5; display: table-cell; width: 85%; min-width:60px; vertical-align: baseline;  }
+
+
+textarea  { grid-column: 1 / 5; width: 90%; resize: vertical;}
