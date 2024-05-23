@@ -15,6 +15,7 @@ export interface IIngredient {
     exclouIslamic?: boolean,
     exclouJueu?: boolean,
     exclouPaleo?: boolean,
+    altVitaminaK?:boolean,
     origen?: string[]; /* referència a altres ingredients; permet gestionar alèrgies */
 }
 

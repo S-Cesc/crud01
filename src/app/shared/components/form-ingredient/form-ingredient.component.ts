@@ -80,6 +80,7 @@ export class FormIngredientComponent implements OnInit {
       haram : new FormControl<boolean>(false),
       taref : new FormControl<boolean>(false),
       noPaleo : new FormControl<boolean>(false),
+      altK : new FormControl<boolean>(false),
       descripcio: new FormControl<string>('')
     });
   }
@@ -115,6 +116,9 @@ export class FormIngredientComponent implements OnInit {
     if (ing.exclouPaleo) {
       this.ingredientForm.controls["noPaleo"].setValue(ing.exclouPaleo);
     }
+    if (ing.altVitaminaK) {
+      this.ingredientForm.controls["altK"].setValue(ing.altVitaminaK);
+    }
 
     this.changeDietValue(ing.dieta);
   }
@@ -146,17 +150,35 @@ export class FormIngredientComponent implements OnInit {
   }
 
   public onToggleNoDiabetics(event: any) {
-    console.log(event);
+    if (event.checked) {
+      this.ingredientForm.controls["noDiabetics"].markAllAsTouched;
+    } 
   }
   public onToggleNoCeliacs(event: any) {
+    if (event.checked) {
+      this.ingredientForm.controls["noCeliacs"].markAllAsTouched;
+    } 
   }
   public onToggleHaram(event: any) {
+    if (event.checked) {
+      this.ingredientForm.controls["haram"].markAllAsTouched;
+    } 
   }
   public onToggleTaref(event: any) {
+    if (event.checked) {
+      this.ingredientForm.controls["taref"].markAllAsTouched;
+    } 
   }
   public onToggleNoPaleo(event: any) {
+    if (event.checked) {
+      this.ingredientForm.controls["noPaleo"].markAllAsTouched;
+    } 
   }
-
+  public onToggleAltK(event: any) {
+    if (event.checked) {
+      this.ingredientForm.controls["altK"].markAllAsTouched;
+    } 
+  }
 
   public submitButton(): void {
     function readLangSubform(subForm: any) : NomIdiomes {
@@ -192,6 +214,9 @@ export class FormIngredientComponent implements OnInit {
       }
       if (f.controls["noPaleo"].value !== undefined) {
         objReturn["exclouPaleo"] =  f.controls["noPaleo"].value;
+      }
+      if (f.controls["altK"].value !== undefined) {
+        objReturn["altVitaminaK"] =  f.controls["altK"].value;
       }
       return objReturn;
     }
