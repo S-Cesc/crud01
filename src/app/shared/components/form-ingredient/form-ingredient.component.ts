@@ -149,37 +149,6 @@ export class FormIngredientComponent implements OnInit {
     }
   }
 
-  public onToggleNoDiabetics(event: any) {
-    if (event.checked) {
-      this.ingredientForm.controls["noDiabetics"].markAllAsTouched;
-    } 
-  }
-  public onToggleNoCeliacs(event: any) {
-    if (event.checked) {
-      this.ingredientForm.controls["noCeliacs"].markAllAsTouched;
-    } 
-  }
-  public onToggleHaram(event: any) {
-    if (event.checked) {
-      this.ingredientForm.controls["haram"].markAllAsTouched;
-    } 
-  }
-  public onToggleTaref(event: any) {
-    if (event.checked) {
-      this.ingredientForm.controls["taref"].markAllAsTouched;
-    } 
-  }
-  public onToggleNoPaleo(event: any) {
-    if (event.checked) {
-      this.ingredientForm.controls["noPaleo"].markAllAsTouched;
-    } 
-  }
-  public onToggleAltK(event: any) {
-    if (event.checked) {
-      this.ingredientForm.controls["altK"].markAllAsTouched;
-    } 
-  }
-
   public submitButton(): void {
     function readLangSubform(subForm: any) : NomIdiomes {
       let tmpValues = Object.keys(subForm).filter(key => !isNullOrEmpty(subForm[key])).map((key) => [key, subForm[key]]);
@@ -200,22 +169,28 @@ export class FormIngredientComponent implements OnInit {
         "descripció": f.controls["descripcio"].value,        
         "origen": undefined
       };
-      if (f.controls["noDiabetics"].value !== undefined) {
+      if (f.controls["noDiabetics"].value !== undefined
+        && f.controls["noDiabetics"].value) {
         objReturn.exclouDiabetic = f.controls["noDiabetics"].value;
       }
-      if (f.controls["noCeliacs"].value !== undefined) {
+      if (f.controls["noCeliacs"].value !== undefined
+        && f.controls["noCeliacs"].value) {
         objReturn["exclouCelliac"] = f.controls["noCeliacs"].value;
       }
-      if (f.controls["haram"].value !== undefined) {
+      if (f.controls["haram"].value !== undefined
+        && f.controls["haram"].value) {
         objReturn["exclouIslamic"] = f.controls["haram"].value;
       }
-      if (f.controls["taref"].value !== undefined) {
+      if (f.controls["taref"].value !== undefined &&
+      f.controls["taref"].value) {
         objReturn["exclouJueu"] = f.controls["taref"].value;
       }
-      if (f.controls["noPaleo"].value !== undefined) {
+      if (f.controls["noPaleo"].value !== undefined &&
+      f.controls["noPaleo"].value) {
         objReturn["exclouPaleo"] =  f.controls["noPaleo"].value;
       }
-      if (f.controls["altK"].value !== undefined) {
+      if (f.controls["altK"].value !== undefined &&
+      f.controls["altK"].value) {
         objReturn["altVitaminaK"] =  f.controls["altK"].value;
       }
       return objReturn;
