@@ -9,7 +9,7 @@
         <h2 class="footer-menu-name"> Additional Info</h2>
         <ul class="footer-menu-list">
           <li>
-            <a href="/#">Documentation</a>
+            <a [routerLink]="['/help']">Documentation</a>
           </li>
           <li>
             <a [routerLink]="['/aboutus']">About us</a>
@@ -21,7 +21,7 @@
     <div class="footer-social-links">
       <!-- Github -->
       <a
-        href="https://github.com/angular/angular"
+        href="https://github.com/S-Cesc/crud01"
         aria-label="Github"
         target="_blank"
         rel="noopener"
@@ -87,7 +87,7 @@
   <div class="footer-author">
         <div class="footer-author-wrapper">
           <p class="footer-author-text">
-            <a class="footer-author-link" href="#" target="_self"> 2024 - Cesc Sasai i Lasaosa. </a>
+            <a class="footer-author-link" [routerLink]="['/aboutus']" target="_self"> 2024 - Cesc Sasai i Lasaosa. </a>
           </p>
         </div>
   </div>
