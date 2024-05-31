@@ -1,0 +1,43 @@
+
+.grid-container {
+    display: grid;
+    gap: 10px;
+    padding: 10px;
+  }
+  
+
+.grid-container > div {
+    text-align: center;
+    display: flex;
+    align-items: center;
+    padding: 20px 0;
+    font-size: 3vh;
+  }
+  
+.input-label {
+    grid-column-start: 1;
+}
+
+.input-box {
+    grid-column-start: 2;
+}
+
+.input-box input[type="email"], .input-box input[type="password"], .input-box input[type="text"] {
+    font-size: 3vh;
+}
+
+.button-accept {
+    grid-column: 1 / 3;
+    display: flex;
+    justify-content: center;
+}
+
+.button-accept .button {
+    width: 50%!important;
+    font-size: 3vh;
+    min-width: unset!important;
+}
+
+.other-link {
+    grid-column: 1 / 3;
+}

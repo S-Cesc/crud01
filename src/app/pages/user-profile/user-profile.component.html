@@ -1,0 +1,100 @@
+<app-header [title]="title" [errorTextHTML]="errorTextHTML"></app-header>
+<main class="main">
+    <div class="content">
+        <mat-card class="previsual" style="margin-bottom: 2em; background-color: var(--teal-2);">
+            <mat-card-header>
+                <mat-card-title>Previsualització</mat-card-title>
+            </mat-card-header>
+            <mat-card-content>
+                <img mat-card-avatar class="thumb {{profileImgUrl ? '' : 'greyoutImg'}}" alt="user profile"
+                    src="{{ profileImgUrl ?? 'assets/user-info_icon.svg' }}" />
+                <div style="margin-right: 5em;">
+                    <h1 class="text-end" id="userName_title" style="margin-bottom: 0px;">{{displayName?? '(*) Nom'}}
+                    </h1>
+                    <span id="email_lbl">{{email}}</span>
+                </div>
+            </mat-card-content>
+        </mat-card>
+        <form class="grid-container" [style]="'flex-basis:'+(userValidated?'40':'60')+'%;'"
+            [formGroup]="profileForm" (ngSubmit)="submit()">
+            <mat-card style="background-color: var(--teal-1); max-width: 28rem;">
+                <mat-card-header>
+                    @if (!userValidated) {
+                    <h2 class="errorMessage">Usuari no validat</h2>
+                    <p class="errorMessage">Recordi revisar el correu per confirmar-lo, i ser reconegut com a usuari.
+                    </p>
+                    }
+                </mat-card-header>
+                <mat-card-content>
+                    <div>
+                        <div class="grid">
+                                <mat-form-field style="width: 25em; margin-bottom: 1em;">
+                                    <mat-label class="form-label" for="newDisplayName" style="margin-top: 55px;">Nom públic
+                                        per a mostrar: </mat-label>
+                                    <input matInput class="form-control" type="text" id="newDisplayName" required
+                                        minlength="2" maxlength="30" autocomplete="nickname" [disabled]="wait"
+                                        (input)="nomInputEvent($event)" (focusout)="nomFocusOutEvent($event)" formControlName="newDisplayName">
+                                    <mat-hint>
+                                        <small style="font-size: x-small;">Es requereix un nom per permetre a altres usuaris identificar-vos.</small>
+                                    </mat-hint>
+                                </mat-form-field>
+                            <!--  style="margin-bottom: 0; padding-bottom: 1em;" -->
+                                <mat-form-field style="width: 25rem;">
+                                    <mat-label class="form-label" for="photoURL">URL de la imatge: </mat-label>
+                                    <input matInput class="form-control" type='url' id="photoURL"
+                                        formControlName="photoURL" placeholder="(sense icona)" [disabled]="wait"
+                                        (input)="imgUrlInputEvent($event)" autocomplete="new-url">
+                                    <mat-icon matSuffix svgIcon="gravatar" (click)="imgFromGravatar()"></mat-icon>
+                                    <mat-icon matSuffix (click)="removeImg()">delete</mat-icon>
+                                    <mat-hint>Podeu definir una icona, per exemple a&nbsp;
+                                        <a href="https://es.gravatar.com/site/login" target="_blank"><span
+                                                style="color: rgb(33, 37, 41);">Gravatar.com</span></a>
+                                    </mat-hint>
+                                </mat-form-field>
+                        </div>
+                    </div>
+                </mat-card-content>
+                <mat-card-actions>
+                    <div id="send_zone" [hidden]="!readyToSubmit"
+                        style="padding: 15px;border-style: solid;border-color: teal; width: 25em;">
+                        <div class="input-label">
+                            <label for="password">Contrasenya: </label>
+                        </div>
+                        <div class="input-box">
+                            <mat-form-field style="width: 100%;">
+                                <input matInput [type]="hidePassword ? 'password' : 'text'" placeholder="Password"
+                                    formControlName="password" minlength="8" maxlength="24"
+                                    [pattern]="pattern" autocomplete="new-password" [disabled]="wait" />
+                                <mat-icon matSuffix (click)="hidePassword = !hidePassword">{{hidePassword ?
+                                    'visibility_off' : 'visibility'}}</mat-icon>
+                            </mat-form-field>
+                        </div>
+                        <!--
+                    <label class="form-label" for="password_txt">Password</label>
+                <div class="password-container" style="position: relative;">
+                    <i class="far fa-eye-slash password-icon" id="password_icon" style="position: absolute;"></i>
+                    <input class="form-control" type="password" id="password_txt" style="padding-right: 36px;"
+                        required minlength="8" maxlength="24"
+                        pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[\\\-\x22\x26\/\(\)'¡¿·!@#~$%=?¿ _:;+*.,]).{8,24}"
+                        name="password_txt">
+                </div>
+            -->
+                        <button mat-raised-button id="profile_button" type="submit" [disabled]="!profileForm.valid"
+                            style="background: var(--bs-teal);margin-top: 20px;">Enviar</button>
+                    </div>
+                </mat-card-actions>
+            </mat-card>
+        </form>
+        @if (userValidated) {
+            <div class="divider" role="separator" aria-label="Divider"></div>
+            <app-lateral-menu style="flex-basis:20%;"></app-lateral-menu>
+        }
+
+
+        <!--
+        <div class="alert alert-warning ocultar" role="alert" id="alert_msg"><i class="fas fa-exclamation-circle alert-icon"></i><span class="alert-msg"><strong>Alert</strong> text.</span><small class="small" style="padding-left: 10px;">Text</small></div>
+        -->
+
+    </div>
+</main>
+<app-footer></app-footer>

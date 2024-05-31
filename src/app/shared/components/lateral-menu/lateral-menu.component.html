@@ -1,28 +1,32 @@
 <div class="right-side">
   <div class="menu-group">
     @for (item of [
-    { title: 'Ingredients', link: ['/ingredients'], items: [
-        { title: 'Busca ingredient', link: ['/cercador-ingredient'] },
-        { title: 'Nou ingredient', link: ['/nou-ingredient'] }] },
-    { title: 'Receptes', link: ['/receptes'], items: [
-        { title: 'Nova recepta', link: ['/nova-recepta'] }]
+    { title: 'Ingredients', link: ['/private/ingredients'], items: [
+        { title: 'Busca ingredient', link: ['/private/cercador-ingredient'] },
+        { title: 'Nou ingredient', link: ['/private/nou-ingredient'] }] },
+    { title: 'Receptes', link: ['/private/receptes'], items: [
+        { title: 'Nova recepta', link: ['/private/nova-recepta'] }]
     }]; track item.title) {
     <a class="menu-item" [href]="item.link">
       <span>{{ item.title }}</span>
+      <!--
       <svg xmlns="http://www.w3.org/2000/svg" height="14" viewBox="0 -960 960 960" width="14" fill="currentColor">
         <path
           d="M200-120q-33 0-56.5-23.5T120-200v-560q0-33 23.5-56.5T200-840h280v80H200v560h560v-280h80v280q0 33-23.5 56.5T760-120H200Zm188-212-56-56 372-372H560v-80h280v280h-80v-144L388-332Z" />
       </svg>
+      -->
     </a>
     @if (item.items) {
       <ul>
       @for (innerItem of item.items; track innerItem.title) {
         <a class="menu-item" [href]="innerItem.link">
           <span>{{ innerItem.title }}</span>
+          <!--
           <svg xmlns="http://www.w3.org/2000/svg" height="14" viewBox="0 -960 960 960" width="14" fill="currentColor">
             <path
               d="M200-120q-33 0-56.5-23.5T120-200v-560q0-33 23.5-56.5T200-840h280v80H200v560h560v-280h80v280q0 33-23.5 56.5T760-120H200Zm188-212-56-56 372-372H560v-80h280v280h-80v-144L388-332Z" />
           </svg>
+          -->
         </a>
       }
       </ul>
