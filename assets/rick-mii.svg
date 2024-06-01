@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+<svg xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns="http://www.w3.org/2000/svg" xmlns:cc="http://creativecommons.org/ns#" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:svg="http://www.w3.org/2000/svg" xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape" xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd" xmlns:ns1="http://sozi.baierouge.fr" id="svg2" viewBox="0 0 163.36 254.59" version="1.1" inkscape:version="0.91 r13725">
+  <defs id="defs4">
+    <linearGradient id="linearGradient3622">
+      <stop id="stop3624" style="stop-color:#ffffff" offset="0"/>
+      <stop id="stop3626" style="stop-color:#ffffff;stop-opacity:0" offset="1"/>
+    </linearGradient>
+    <linearGradient id="linearGradient3869" y2="598.2" gradientUnits="userSpaceOnUse" x2="406.43" y1="414.59" x1="407.5">
+      <stop id="stop3632" style="stop-color:#008000" offset="0"/>
+      <stop id="stop3634" style="stop-color:#1f4d00" offset="1"/>
+    </linearGradient>
+    <radialGradient id="radialGradient3871" gradientUnits="userSpaceOnUse" cy="526.09" cx="372.08" gradientTransform="matrix(1.3515 -1.2187 1.1724 1.3002 -741.45 320.25)" r="69.346">
+      <stop id="stop3642" style="stop-color:#00d00f" offset="0"/>
+      <stop id="stop3644" style="stop-color:#008009;stop-opacity:0" offset="1"/>
+    </radialGradient>
+    <linearGradient id="linearGradient3873" y2="529.69" gradientUnits="userSpaceOnUse" x2="376.28" y1="428.29" x1="436.28">
+      <stop id="stop3652" style="stop-color:#ffffff" offset="0"/>
+      <stop id="stop3654" style="stop-color:#ffffff;stop-opacity:0" offset="1"/>
+    </linearGradient>
+    <linearGradient id="linearGradient3875" y2="421.17" gradientUnits="userSpaceOnUse" x2="376.82" y1="345.31" x1="378.19">
+      <stop id="stop2828" style="stop-color:#ffccaa" offset="0"/>
+      <stop id="stop2830" style="stop-color:#ffae78" offset="1"/>
+    </linearGradient>
+    <radialGradient id="radialGradient3877" gradientUnits="userSpaceOnUse" cy="382.35" cx="378.03" gradientTransform="matrix(1.7734 -.0025233 -.0029310 1.4283 -288.87 -161.82)" r="56.181">
+      <stop id="stop3614" style="stop-color:#ffccaa;stop-opacity:0" offset="0"/>
+      <stop id="stop3616" style="stop-color:#ffccaa;stop-opacity:.34513" offset="1"/>
+    </radialGradient>
+    <linearGradient id="linearGradient3879" y2="398.77" xlink:href="#linearGradient3622" gradientUnits="userSpaceOnUse" x2="380.13" y1="311.17" x1="378.47"/>
+  </defs>
+  <g id="layer1" transform="translate(-278.7 -334.33)">
+    <g id="g3021" transform="translate(-17.813 4.1108)">
+      <path id="path2818" style="fill-rule:evenodd;fill:url(#linearGradient3869)" d="m378.19 427.99c-44.063 0-79.951 61.713-81.679 138.99 52.832 21.068 106.88 26.312 163.36 0-1.7275-77.276-37.616-138.99-81.679-138.99z"/>
+      <path id="path3638" style="fill-rule:evenodd;fill:url(#radialGradient3871)" d="m378.19 429.99c-37.41 0-67.88 57.399-69.346 129.27 44.855 19.595 90.743 24.473 138.69 0-1.46-71.87-31.93-129.27-69.34-129.27z"/>
+      <path id="path3648" style="fill-rule:evenodd;fill:url(#linearGradient3873)" d="m378.19 427.99c-44.063 0-79.951 61.713-81.679 138.99 52.832 21.068 106.88 26.312 163.36 0-1.7275-77.276-37.616-138.99-81.679-138.99z"/>
+      <g id="g3672" transform="translate(1.3703 130.18)">
+        <path id="path2816" style="fill-rule:evenodd;fill:url(#linearGradient3875)" d="m433 364.49a56.181 56.181 0 1 1 -112.36 0 56.181 56.181 0 1 1 112.36 0z" transform="translate(1.3703 -101.4)"/>
+        <path id="path2834" style="fill-rule:evenodd;fill:url(#radialGradient3877)" d="m433 364.49a56.181 56.181 0 1 1 -112.36 0 56.181 56.181 0 1 1 112.36 0z" transform="matrix(.95237 0 0 .90359 17.207 -62.999)"/>
+        <path id="path3620" style="fill-rule:evenodd;fill:url(#linearGradient3879)" d="m433 364.49a56.181 56.181 0 1 1 -112.36 0 56.181 56.181 0 1 1 112.36 0z" transform="matrix(.82927 0 0 .71951 65.706 -10.923)"/>
+      </g>
+      <path id="path3700" style="fill-rule:evenodd;fill:#501616" d="m401.22 436.1c0-8.9152-9.2771-16.142-20.721-16.142s-20.721 7.2272-20.721 16.142h41.442zm6.377-0.35327c0 17.406-12.27 31.516-27.405 31.516-15.136 0-27.405-14.11-27.405-31.516s12.27-31.516 27.405-31.516c15.136 0 27.405 14.11 27.405 31.516z"/>
+      <g id="g5699" transform="matrix(1 0 0 1.0244 498.78 -126.61)">
+        <path id="path5679" style="fill-rule:evenodd;fill:#552200" d="m-64.402 502.13h-112.36c-0.0158-31.532 25.153-56.181 56.181-56.181s56.181 25.153 56.181 56.181z"/>
+        <path id="path5683" style="fill:url(#linearGradient3879);fill-rule:evenodd" d="m433 364.49a56.181 56.181 0 1 1 -112.36 0 56.181 56.181 0 1 1 112.36 0z" transform="matrix(.70732 0 0 .45122 -385.75 310.22)"/>
+      </g>
+      <g id="g3718" transform="translate(152.73 62.292)">
+        <path id="rect3705" style="stroke-linejoin:round;stroke:#000000;stroke-width:4;fill:#d7eef4" d="m224.04 313.77c0 11.059-2.9801 19.963-6.6819 19.963-9.6005 1.2991-18.935 1.5325-27.827 0-3.7018 0-6.6819-8.9033-6.6819-19.963 4.0877-3.3576 35.436-3.1901 41.191 0z"/>
+        <path id="path3716" style="stroke-linejoin:round;stroke:#000000;stroke-width:4;fill:#d7eef4" d="m269.77 313.77c0 11.059-2.9801 19.963-6.6819 19.963-9.6005 1.2991-18.935 1.5325-27.827 0-3.7018 0-6.6819-8.9033-6.6819-19.963 4.0877-3.3576 35.436-3.1901 41.191 0z"/>
+      </g>
+    </g>
+  </g>
+  <metadata>
+    <rdf:RDF>
+      <cc:Work>
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type rdf:resource="http://purl.org/dc/dcmitype/StillImage"/>
+        <cc:license rdf:resource="http://creativecommons.org/licenses/publicdomain/"/>
+        <dc:publisher>
+          <cc:Agent rdf:about="http://openclipart.org/">
+            <dc:title>Openclipart</dc:title>
+          </cc:Agent>
+        </dc:publisher>
+        <dc:title>User Icon</dc:title>
+        <dc:date>2011-01-26T11:03:09</dc:date>
+        <dc:description>The picture I use for my avatar here.</dc:description>
+        <dc:source>https://openclipart.org/detail/110071/user-icon-by-coredump</dc:source>
+        <dc:creator>
+          <cc:Agent>
+            <dc:title>coredump</dc:title>
+          </cc:Agent>
+        </dc:creator>
+        <dc:subject>
+          <rdf:Bag>
+            <rdf:li>avatar</rdf:li>
+            <rdf:li>cartoon</rdf:li>
+            <rdf:li>icon</rdf:li>
+            <rdf:li>messenger</rdf:li>
+            <rdf:li>person</rdf:li>
+            <rdf:li>user</rdf:li>
+          </rdf:Bag>
+        </dc:subject>
+      </cc:Work>
+      <cc:License rdf:about="http://creativecommons.org/licenses/publicdomain/">
+        <cc:permits rdf:resource="http://creativecommons.org/ns#Reproduction"/>
+        <cc:permits rdf:resource="http://creativecommons.org/ns#Distribution"/>
+        <cc:permits rdf:resource="http://creativecommons.org/ns#DerivativeWorks"/>
+      </cc:License>
+    </rdf:RDF>
+  </metadata>
+</svg>
