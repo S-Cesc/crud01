@@ -24,13 +24,10 @@ a {
 }
 
 .wave-path {
-  fill: #fffff2;
+  fill: var(--mint);// #fffff2;
 }
 
 .footer-content {
-  margin-left: auto;
-  margin-right: auto;
-  max-width: 1230px;
   padding: 40px 15px 100px;
   position: relative;
 }
@@ -126,21 +123,6 @@ a {
   text-decoration: none;
 }
 
-/*
-  - (min-width:320px) and (max-width:479px)
-    smartphones, portrait iPhone, portrait 480x320 phones (Android)
-  - (min-width:480px) and (max-width:599px)
-    smartphones, Android phones, landscape iPhone
-  - (min-width:600px) and (max-width: 800px)
-    portrait tablets, portrait iPad, e-readers (Nook/Kindle), landscape 800x480 phones (Android)
-  - (min-width:801px)
-    tablet, landscape iPad, lo-res laptops ands desktops
-  - (min-width:1025px)
-    big landscape tablets, laptops, and desktops
-  - (min-width:1281px) {
-    hi-res laptops and desktops
-
-*/
 
 /* Media Query For different screens */
 @media (min-width:320px) and (max-width: 759px) {
@@ -149,21 +131,13 @@ a {
   /* smartphones, Android phones, landscape iPhone */
   /* portrait tablets, portrait iPad, e-readers (Nook/Kindle), landscape 800x480 phones (Android) */
   .footer-content {
-    margin-left: auto;
-    margin-right: auto;
-    max-width: 1230px;
     padding: 40px 15px 150px;
-    position: relative;
   }
 }
 
 @media (min-width: 760px) {
   .footer-content {
-    margin-left: auto;
-    margin-right: auto;
-    max-width: 1230px;
     padding: 40px 15px 100px;
-    position: relative;
   }
 
   .wave-svg {

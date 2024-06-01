@@ -181,13 +181,7 @@ export class UserProfileComponent implements OnInit {
       const password = formValue["password"];
       delete formValue["password"];
       console.log(formValue);
-      await this.authService.updateUserProfile(formValue)
-      .then(() => { 
-        const currentUser = this.authService.currentUser;
-        if (currentUser) this.fillForm(currentUser);
-        else throw "Invalid user."
-      })
-      .catch((error) => { this.errorTextHTML = error; });
+      await this.authService.updateUserProfile(formValue);
     } else {
       throw "Invalid user."
     }
