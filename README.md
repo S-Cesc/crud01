@@ -1,4 +1,4 @@
-# Crud01
+# recull-receptes
 
 REPOSITORI: https://github.com/S-Cesc/recull-receptes
 
