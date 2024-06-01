@@ -1,6 +1,6 @@
 # Crud01
 
-REPOSITORI: https://github.com/S-Cesc/crud01
+REPOSITORI: https://github.com/S-Cesc/recull-receptes
 
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 17.3.7.
 
