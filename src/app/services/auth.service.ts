@@ -6,6 +6,7 @@ import {
   authState,
   browserSessionPersistence,
   createUserWithEmailAndPassword, reauthenticateWithCredential, sendEmailVerification,
+  sendPasswordResetEmail,
   signInWithEmailAndPassword,
   signOut,
   updateProfile
@@ -79,6 +80,14 @@ export class AuthService implements OnDestroy {
       //reportError permet registrar errors
       //reportError({ message: getErrorMessage(error) });
       //Llancem l'error, perquè tenim una gestió centralitzada d'errors
+      throw (error);
+    }
+  }
+
+  async sendPasswordResetEmail(email: string) {
+    try {
+      sendPasswordResetEmail(this.auth, email);
+    } catch (error) {
       throw (error);
     }
   }

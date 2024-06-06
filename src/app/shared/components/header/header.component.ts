@@ -3,6 +3,7 @@ import { AuthService } from '../../../services/auth.service';
 import { Router, RouterLink } from '@angular/router';
 import { MatCardModule } from '@angular/material/card';
 import { userProfile } from '../../../model/types';
+import { GUIerrorType, errorMessages } from '../../../util/errors';
 
 @Component({
   selector: 'app-header',
@@ -39,9 +40,14 @@ export class HeaderComponent {
   }
 
   logout() {
-    this.authService.logout().then(() => {
-      this.router.navigate(['login']);
-    })
+    this.authService.logout()
+    .then(() => this.router.navigate(['login']))
+    .catch(() => {
+      const err = new Error(errorMessages["serveiLogout"]);
+      err.name = GUIerrorType.AuthenticationError;
+      throw err;   
+    });
+
   }
 
 }

@@ -31,7 +31,6 @@ export const routes: Routes = [
     { path: 'home', redirectTo: 'private/receptes',  pathMatch: 'full'  },
     { path: 'login', component: LoginComponent, ...canActivate(redirectLoggedInToHome) },
     { path: 'register', component: RegisterComponent, ...canActivate(redirectLoggedInToHome) },
-    { path: 'recovery', component: RecoveryComponent, ...canActivate(redirectLoggedInToHome) },
     { path: 'user-profile', component: UserProfileComponent, ...canActivate(redirectUnauthorizedToLogin) },
     { path: 'change-email', component: ChangeEmailComponent, ...canActivate(redirectUnauthorizedToLogin) },
     { path: 'private', ...canActivate(redirectUnverifiedToProfile), children: [
@@ -43,6 +42,7 @@ export const routes: Routes = [
         { path: 'nova-recepta', component: NovaReceptaComponent },
         { path: '**', pathMatch: 'full', component: PagenotfoundComponent }, 
     ]},
+    { path: 'recovery', component: RecoveryComponent },
     { path: 'condicions', component: CondicionsComponent },
     { path: 'aboutus', component: AboutusComponent },
     { path: '**', pathMatch: 'full', component: PagenotfoundComponent }, 

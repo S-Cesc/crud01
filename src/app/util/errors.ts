@@ -48,7 +48,10 @@ export const errorMessages: { [key: string]: string } = {
     passwordAgain: 'Les contrasenyes han de coincidir.',
     displayName: 'El nom a de tenir com a mínim tres caracters i ser ÚNIC.',
     formulari: "Error inesperat: Potser no es compleixen les condicions del formulari, o ha hagut un error en el servei.",
+    serveiLogin: "A fallat l'operació de login. Si us plau, torneu a provar!",
     serveiRegistre: "A fallat l'operació de registre. Si us plau, torneu a provar!",
+	serveiRecovery: "A fallat l'operació. Si us plau, torneu a provar si verifiqueu que no us ha arribat el correu!",
+	serveiLogout: "A fallat l'operació. Si us plau, repetiu-la si encara sou l'usuari actiu de l'aplicació.",
     senseUsari:  "Cap usuari ha iniciat sessió.",
 	usuariNoValidat: "Usuari no validat.",
 	usuariNoValidatDetall:
@@ -64,7 +67,7 @@ export const errorMessages: { [key: string]: string } = {
 export const hintMessages: { [key: string]: string } = {
 	email: "Adreça de correu.",
 	emailAgain: "Repetiu l'adreça de correu.",
-	password: "Podeu fer servir una frase que tingui majúscules i un número",
+	password: "Podeu fer servir una frase que tingui majúscules i un número.",
 	passwordAgain: "Repetiu la contrasenya.",
 	displayName: 'Es requereix un nom per permetre a altres usuaris identificar-vos.',
 	registerRequired: "Per acedir a aquest lloc web és necessari registrar-se.",
@@ -75,7 +78,8 @@ export const hintMessages: { [key: string]: string } = {
 	nonPublicStaff: "Informació personal no pública",
 	nonPublicStaffDetail: "Aquesta informació només es fa servir quan executeu el programa:\
 				l'idioma per a la visualització, i podeu definir perfils dietètics per a les vostres búsquedes.",
-
+	passwordRecovery: "Aquest formulari permet enviar-vos un correu amb un enllaç que us permetrà establir la contrasenya.",
+	passwordRecoveryDone: "S'ha enviat un correu amb un enllaç que permet restablir la contrasenya.",
 };
 
 /**
@@ -86,6 +90,8 @@ export const pageNames: { [key: string]: string } = {
 	login: "Inici de sessió",
 	profile: "Dades de l'usuari",
 	preview: "Previsualització",
+	recovery: "Establir de nou la contrasenya",
+	changePassword: "Canviar la contrasenya",
 };
 
 /**
@@ -108,6 +114,9 @@ export const formActions: { [key: string]: string } = {
 	signin: "Accedir-hi",
 	passwordRecover: "Contrasenya oblidada",
 	changeEmail: "Canviar l'email",
+	changePassword: "Canviar contrasenya",
+	recovery: "Establir de nou la contrasenya",
+	entente: "Entesos",
 	send: "Enviar",
 }
 

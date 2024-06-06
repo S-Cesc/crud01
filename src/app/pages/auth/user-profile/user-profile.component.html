@@ -18,6 +18,10 @@
                 <a mat-raised-button [href]="'/change-email'"
                     [disabled]="userValidated && !currentDisplayNameDefined" color="primary">{{formActions["changeEmail"]}}</a>
             </mat-card-actions>
+            <mat-card-actions>
+                <a mat-raised-button [href]="'/recovery'"
+                    [disabled]="userValidated && !currentDisplayNameDefined" color="primary">{{formActions["changePassword"]}}</a>
+            </mat-card-actions>
         </mat-card>
         <div class="grid-container">
             <form class="grid-container" [style]="'flex-basis:'+(userValidated?'40':'60')+'%;'"
@@ -47,7 +51,7 @@
                                 <mat-label class="form-label" for="photoURL">{{formLabels["imageURL"]}}: </mat-label>
                                 <input matInput class="form-control" type='url' id="photoURL"
                                     formControlName="photoURL" placeholder="(sense icona)" [readonly]="!userValidated"
-                                    (input)="imgUrlInputEvent($event)" autocomplete="new-url">
+                                    (input)="imgUrlInputEvent($event)" autocomplete="url">
                                 <mat-icon matSuffix svgIcon="gravatar" (click)="imgFromGravatar()"></mat-icon>
                                 <mat-icon matSuffix (click)="removeImg()">delete</mat-icon>
                                 <mat-hint>{{hints["imageURL"]}}&nbsp;

@@ -10,13 +10,14 @@
                     <div id="emailGroup" formGroupName="emailGroup">
                         <mat-form-field id="email">
                             <mat-label>{{formLabels['email']}}: </mat-label>
-                            <input matInput type="email" placeholder="{{hints['email']}}" formControlName="email" [readonly]="wait" />
+                            <input matInput type="email" placeholder="{{hints['email']}}" formControlName="email"
+                                autocomplete="username" [readonly]="wait" />
                             <mat-error>{{errors['email']}}</mat-error>
                         </mat-form-field>
                         <mat-form-field id="email-again">
                             <mat-label>{{formLabels['emailAgain']}}: </mat-label>
                             <input matInput type="email" placeholder="{{hints['emailAgain']}}" formControlName="emailAgain"
-                                 [readonly]="wait" [errorStateMatcher]="confirmValidParentMatcher" />
+                                 autocomplete="username" [readonly]="wait" [errorStateMatcher]="confirmValidParentMatcher" />
                             <mat-hint>{{hints['emailAgain']}}</mat-hint>
                             <mat-error>{{errors['emailAgain']}}</mat-error>
                         </mat-form-field>
@@ -34,7 +35,7 @@
                         <mat-form-field id="password-again">
                             <mat-label>{{formLabels['passwordAgain']}}: </mat-label>
                             <input matInput [type]="hidePasswordAgain ? 'password' : 'text'" placeholder="{{hints['passwordAgain']}}"
-                                formControlName="passwordAgain" minlength="8" maxlength="32"
+                                formControlName="passwordAgain" minlength="8" maxlength="32" autocomplete="new-password"
                                 [pattern]="pattern" [errorStateMatcher]="confirmValidParentMatcher" [readonly]="wait" />
                             <mat-icon matSuffix (click)="hidePasswordAgain = !hidePasswordAgain">{{hidePasswordAgain ? 'visibility_off' :
                                 'visibility'}}</mat-icon>

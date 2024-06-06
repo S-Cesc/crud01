@@ -74,7 +74,7 @@ export class LoginComponent implements OnInit {
     if (user) {
       this.router.navigateByUrl('/home', { replaceUrl: true });
     } else {
-      const err = new Error(this.errors["formulari"]);
+      const err = new Error(this.errors["serveiLogin"]);
       err.name = GUIerrorType.FormError;
       throw err;
     }

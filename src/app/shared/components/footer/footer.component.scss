@@ -67,7 +67,7 @@ a {
   margin-top: 5px;
 }
 
-.footer-content-column ul li a:hover {
+.footer-content-column li>a:hover {
   color: var(--spearmint);
 }
 
@@ -91,7 +91,7 @@ a {
   transition: fill .2s;
 }
 
-.footer-social-links a[ng-reflect-router-link]:hover svg path {
+.footer-social-links a:hover svg path {
   fill: var(--gray-400);
 }
 

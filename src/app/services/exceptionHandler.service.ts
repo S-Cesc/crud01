@@ -7,7 +7,7 @@
  */
 
 import { ErrorHandler, Injectable, NgZone } from '@angular/core';
-import { toErrorWithMessage } from '../util/errors';
+import { errorMessages, toErrorWithMessage } from '../util/errors';
 import { MatSnackBar } from '@angular/material/snack-bar';
 
 
@@ -34,7 +34,7 @@ export class ErrorService implements ErrorHandler {
                 err = toErrorWithMessage(err);
                 console.error(`ErrorService.handleError, ${err['name']?? "err"}` + " -> ", err);
                 let errText = (err["name"]?? "Error") + ": " + err["message"];
-                this._snackBar.open(errText, 'Entesos');
+                this._snackBar.open(errText, errorMessages['entente']);
             }
         );
     }

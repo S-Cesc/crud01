@@ -1,1 +1,37 @@
-<p>recovery works!</p>
+<app-header></app-header>
+<main class="main">
+    <div class="content">
+        <form class="grid-container" (ngSubmit)="passwordRecovery()" [formGroup]="credentials">
+            <mat-card>
+                <mat-card-header>
+                    <h2>{{ !!currentUser? pageNames["changePassword"] : pageNames["recovery"]}}</h2>
+                </mat-card-header>
+                <mat-card-content>
+                    <mat-form-field id="email">
+                        <mat-label>{{formLabels['email']}}: </mat-label>
+                        <input matInput type="email" placeholder="{{hints['email']}}" formControlName="email"
+                            autocomplete="username" [readonly]="wait" />
+                        <mat-error>{{errors['email']}}</mat-error>
+                    </mat-form-field>
+                    <div id="footer">
+                        <mat-hint>
+                            {{hints["passwordRecovery"]}}
+                        </mat-hint>
+                        <mat-hint>
+                            <p><small>Recordeu seguir les normes d'aquest lloc per a les contrasenyes: {{hints["password"]}}</small></p>
+                        </mat-hint>
+                    </div>
+                </mat-card-content>
+                <mat-card-actions>
+                    <button mat-raised-button type="submit" [disabled]="!credentials.valid || wait"
+                        color="accent" expand="block">{{!!currentUser? formActions['changePassword'] : formActions['recovery']}}</button>
+                        @if (!currentUser) {
+                            <a mat-raised-button [href]="'/login'" color="primary">{{formActions['signin']}}</a>
+                            <a mat-raised-button [href]="'/register'" color="primary">{{formActions['signup']}}</a>
+                        }
+                </mat-card-actions>
+            </mat-card>
+        </form>
+    </div>
+</main>
+<app-footer></app-footer>
