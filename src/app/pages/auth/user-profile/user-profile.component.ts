@@ -1,19 +1,24 @@
-import { Component, Input, OnDestroy, OnInit, inject } from '@angular/core';
+import { ChangeDetectorRef, Component, Input, OnDestroy, OnInit, inject } from '@angular/core';
 import { FormBuilder, FormGroup, ReactiveFormsModule, RequiredValidator, Validators } from '@angular/forms';
-import { AuthService } from '../../services/auth.service';
+import { AuthService } from '../../../services/auth.service';
 import { Router, RouterLink } from '@angular/router';
 import { Md5 } from 'ts-md5';
-import { isNullOrEmpty, removeSpacesAlsoNonbreakables, plainLowerCaseString, passwordPattern } from '../../util/util';
+import { isNullOrEmpty, removeSpacesAlsoNonbreakables, plainLowerCaseString } from '../../../util/util';
+import { errorMessages, formActions, formLabels, hintMessages, Idioma, idiomes, pageNames } from '../../../util/errors';
+import { DisplayNameValidator, regExps } from '../../../util/custom.validator';
 import { MatCardModule } from '@angular/material/card';
+import { MatTabsModule } from '@angular/material/tabs';
 import { MatFormFieldModule } from "@angular/material/form-field";
 import { MatInputModule } from '@angular/material/input';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule, MatIconRegistry } from '@angular/material/icon';
+import { MatSelectModule } from '@angular/material/select';
 import { DomSanitizer } from "@angular/platform-browser";
-import { HeaderComponent } from '../../shared/components/header/header.component';
-import { FooterComponent } from '../../shared/components/footer/footer.component';
-import { LateralMenuComponent } from '../../shared/components/lateral-menu/lateral-menu.component';
-import { userProfile } from '../../model/types';
+import { HeaderComponent } from '../../../shared/components/header/header.component';
+import { FooterComponent } from '../../../shared/components/footer/footer.component';
+import { LateralMenuComponent } from '../../../shared/components/lateral-menu/lateral-menu.component';
+import { userProfile } from '../../../model/types';
+import { GUIerrorType } from '../../../util/errors';
 
 
 @Component({
@@ -27,89 +32,119 @@ import { userProfile } from '../../model/types';
     MatFormFieldModule,
     MatInputModule,
     MatIconModule,
-    MatButtonModule],
+    MatButtonModule,
+    MatSelectModule,
+    MatTabsModule],
   templateUrl: './user-profile.component.html',
   styleUrl: './user-profile.component.scss'
 })
 export class UserProfileComponent implements OnInit {
-  authService = inject(AuthService);
+  private authService = inject(AuthService);
 
   title: string;
-  errorTextHTML: string;
   email: string;
   hidePassword: boolean;
-  wait: boolean;
-  checkedInvalidDisplayNames: string[];
-  checkedValidDisplayNames: string[];
   profileForm: FormGroup;
+  profileOptionsForm: FormGroup;
   profileImgUrl?: string | null;
   displayName?: string | null;
+  idioma?: string | null;
 
+  firstProfileName: string = "";
+  secondProfileName: string = "";
+  thirdProfileName: string = "";
 
   constructor(
+    private cd: ChangeDetectorRef,
     matIconRegistry: MatIconRegistry,
     domSanitizer: DomSanitizer,
     fb: FormBuilder
   ) {
-    this.title = "Dades de l'usuari";
-    this.errorTextHTML = "";
+    this.title = pageNames["profile"];
     this.email = "";
     this.hidePassword = true;
-    this.wait = false;
-    this.checkedInvalidDisplayNames = [];
-    this.checkedValidDisplayNames = [];
     this.profileForm = this.createForm(fb);
+    this.profileOptionsForm = this.createForm2(fb);
     matIconRegistry.addSvgIcon(
       "gravatar",
       domSanitizer.bypassSecurityTrustResourceUrl("../../../assets/gravatar.svg"));    
   }
 
+  errors = errorMessages;
+  hints = hintMessages;
+  pageNames = pageNames;
+  formLabels = formLabels;
+  formActions = formActions;
+  idiomes = idiomes;
+
   ngOnInit() {
     const currentUser = this.authService.currentUser;
-    if (currentUser) {
+    if (currentUser && currentUser.email) {
       this.fillForm(currentUser);
-    }
-    else {
+    } else {
       /* PAGE ERROR! */
-      throw "User is not logged in!"
+      const err =  new Error(errorMessages["senseUsuari"]);
+      err.name = GUIerrorType.FormError;
+      throw err;
     }
   }
 
   createForm(fb: FormBuilder) : FormGroup {
     return fb.group({
-      newDisplayName: ['', [Validators.required, Validators.minLength(2)]],
+      newDisplayName: ['', 
+                      [Validators.required, Validators.minLength(3)],
+                      [DisplayNameValidator.createValidator(this.authService)]],
       photoURL: [''],
       password: ['', [Validators.required]]
     });
   }
 
+  createForm2(fb: FormBuilder) : FormGroup {
+    return fb.group({
+      firstProfile: [''],
+      secondProfile: [''],
+      thirdProfile: [''],
+    });
+  }
+
   fillForm(usr: userProfile) {
+    /* dades que depenen de usr */
     const userVerified = usr.emailVerified;
     this.email = usr.email! + (userVerified? "" : " ?");
     console.log(userVerified? "User verified" : "User email pending verification");
     this.displayName = usr.displayName?? undefined;
     this.profileImgUrl = usr.photoURL?? null;
+    /* primer form */
     this.profileForm.controls["newDisplayName"].setValue(usr.displayName);
     this.profileForm.controls["photoURL"].setValue(usr.photoURL);
+    /* segon form */
   }
 
   get userValidated(): boolean {
     const currentUser = this.authService.currentUser;
     return currentUser?.emailVerified ?? false;
   }
-  get readyToSubmit(): boolean {
-    return this.profileForm.controls["newDisplayName"].valid;
-  }
-  get pattern() {
-    return passwordPattern;
-  }
-  get displayNameDefined() {
+  get currentDisplayNameDefined() {
     return !isNullOrEmpty(this.displayName);
   }
-  get displayNameValueChanged() {
-    const actualValue = this.authService.currentUser?.displayName;
-    return this.displayNameDefined && 
-      (isNullOrEmpty(actualValue) || plainLowerCaseString(this.displayName!) != plainLowerCaseString(actualValue!));
+  get userValidatedWithDisplayname(): boolean {
+    const currentUser = this.authService.currentUser;
+    if (!!currentUser) {
+      return currentUser.emailVerified && !!(currentUser.displayName);
+    } else return false;
+  }
+  get readyToSubmit(): boolean {
+    return this.userValidated && this.profileForm.controls["newDisplayName"].valid &&
+    this.profileForm.controls['photoURL'].valid &&
+      (this.profileForm.controls['newDisplayName'].value != this.displayName
+       || this.profileForm.controls['photoURL'].value != this.authService.currentUser?.photoURL);
+  }
+  get pattern() {
+    return regExps['password'];
+  }
+  get langFlag() {
+    if (!!this.idioma) return this.idiomes.find(x => x.value == this.idioma)?.img;
+    else return null;
   }
 
   imgUrlInputEvent($event: any) {
@@ -127,36 +162,6 @@ export class UserProfileComponent implements OnInit {
        null : $event.target.value as string;
     const newValueTransformed = newValue === null ? null : plainLowerCaseString(newValue);
     this.displayName = isNullOrEmpty(newValueTransformed)? null : newValue;
-  }
-  
-  async nomFocusOutEvent($event: any) {
-    let newDisplayNameValid: boolean;
-    this.wait = true;
-    if (this.displayNameValueChanged) {
-      const displayName = plainLowerCaseString(this.displayName!);
-      if (this.checkedInvalidDisplayNames.indexOf(displayName) < 0) {
-        if (this.checkedValidDisplayNames.indexOf(displayName) < 0) {
-          /* fem la petició al servei */
-          const currentUser = this.authService.currentUser;
-          if (currentUser) newDisplayNameValid = await this.authService.validUserNewDisplayName(displayName);
-          else throw "No user logged in." /* wait flag incorrecte no importa gaire */          
-          if (newDisplayNameValid) {
-            /* el DisplayName és vàlid, i l'afegim a la llista de verificats per evitar fer una altra crida al servei */
-            this.checkedValidDisplayNames.push(plainLowerCaseString(displayName));
-          } else {
-            /* el DisplayName ja existeix; l'afegim a la llista de verificats invàlids */
-            this.checkedInvalidDisplayNames.push(plainLowerCaseString(displayName));
-          }
-        } else {
-          /* DisplayName vàlid, però ja s'ha provat */
-          /* en aquest temps podria haver canviat a invàlid, però això no es pot evitar, és només una comprovació del GUI */
-        }
-      } else {
-        /* DisplayName invàlid que ja es va provar */
-      }
-    }
-    /* restaura l'accés al control (disabled=false) */
-    this.wait = false;
   }
 
   imgFromGravatar() {
@@ -181,9 +186,12 @@ export class UserProfileComponent implements OnInit {
       const password = formValue["password"];
       delete formValue["password"];
       console.log(formValue);
-      await this.authService.updateUserProfile(formValue);
+      await this.authService.updateUserProfile(password, formValue);
+      this.profileForm.controls["password"].setValue("");
     } else {
-      throw "Invalid user."
+      const err = new Error(errorMessages["senseUsari"] + " - " + errorMessages["usuariNoValidat"]);
+      err.name = GUIerrorType.AuthenticationError;
+      throw err;
     }
   }
 }

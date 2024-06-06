@@ -1,4 +1,4 @@
-import { ApplicationConfig } from '@angular/core';
+import { ApplicationConfig, ErrorHandler, NgZone } from '@angular/core';
 import { provideRouter } from '@angular/router';
 
 import { routes } from './app.routes';
@@ -7,6 +7,7 @@ import { initializeApp, provideFirebaseApp } from '@angular/fire/app';
 import { getAuth, provideAuth } from '@angular/fire/auth';
 import { getFirestore, provideFirestore } from '@angular/fire/firestore';
 import { provideHttpClient } from "@angular/common/http";
+import { ErrorService } from './services/exceptionHandler.service';
 
 export const appConfig: ApplicationConfig = {
   providers: [
@@ -18,6 +19,12 @@ export const appConfig: ApplicationConfig = {
       "messagingSenderId": "174911916992", "measurementId": "G-3TJPYTDZZR" })),
     provideAuth(() => getAuth()),
     provideFirestore(() => getFirestore()),
-    provideHttpClient()
+    provideHttpClient(),
+    { provide: ErrorHandler,
+      useClass: ErrorService,
+     }
   ]
 };
+/*
+
+*/

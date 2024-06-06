@@ -1,12 +1,11 @@
-<app-header [title]="title" [errorTextHTML]="errorTextHTML"></app-header>
+<app-header [title]="title"></app-header>
 <main class="main">
   <div class="content">
     <div class="left-side">
       <ul class="ingredients">
         <li *ngFor="let ingredient of ingredients" >
           <div>
-            <a routerLink="/ingredient-detail/{{ingredient.id}}">
-              <!-- (click)="editDetail(ingredient.id)" -->
+            <a routerLink="/private/ingredient-detail/{{ingredient.id}}">
                 <span class="badge">
                   @if (hasId(ingredient)) {
                     {{ingredient.id}}

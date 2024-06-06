@@ -31,14 +31,11 @@ h1 {
   max-width: 20vw;
 }
 
-h2,
-.errorMessage {
+h2 {
   margin-left: 1em;
 }
 
-.right-header-block {
- flex-basis: 33%;
-}
+
 
 .subtitle {
   float: right;
@@ -50,6 +47,11 @@ h2,
   text-align: center;
   line-height: 3.6vw;
   color: var(--teal-1);
+}
+
+.subtitle>a {
+  cursor: pointer;
+  text-decoration: none;
 }
 
 .user-profile {

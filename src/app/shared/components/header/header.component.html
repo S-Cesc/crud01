@@ -10,11 +10,6 @@
       Cooktop
     </h1>
     <h2>{{ title }}</h2>
-    <div class="errorMessage">
-      @if (errorTextHTML !== undefined && errorTextHTML != null && errorTextHTML != "") {
-      <span class="errorMessage" [innerHTML]="errorTextHTML"></span>
-      }
-    </div>
   </div>
   <div class="right-header-block">
     @if (isLoggedIn) {
@@ -29,6 +24,9 @@
               <img mat-card-avatar class="thumb {{profileImgUrl ? '' : 'greyoutImg'}}" alt="user profile" src="{{profileImgUrl ? profileImgUrl : 'assets/user-info_icon.svg'}}"/>
             </a>
           </mat-card-header>
+          <mat-card-content style="font-weight: 100; font-family:'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif">
+            <span>{{currentUser?.displayName?? ""}}</span>
+          </mat-card-content>
           <mat-card-actions>
             <a class="logout-action" [href]="" (click)="logout()">
               <span>Logout</span>
@@ -38,7 +36,9 @@
       </div> 
     }
     <div class="subtitle sevillana-regular">
-      Recull de receptes
+      <a class="logo" aria-label="Logo" href="/home">
+        Recull de<br>receptes
+      </a>
     </div>
   </div>
 </header>

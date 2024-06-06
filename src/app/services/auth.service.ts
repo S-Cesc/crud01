@@ -1,33 +1,35 @@
 import { Injectable, OnDestroy, inject } from '@angular/core';
 import {
-  Auth, User, UserCredential,
+  Auth, 
+  EmailAuthProvider, 
+  User,
   authState,
   browserSessionPersistence,
-  createUserWithEmailAndPassword, sendEmailVerification,
+  createUserWithEmailAndPassword, reauthenticateWithCredential, sendEmailVerification,
   signInWithEmailAndPassword,
   signOut,
   updateProfile
 } from '@angular/fire/auth';
-import { DocumentReference, Firestore, doc, getDoc, getFirestore, runTransaction } from '@angular/fire/firestore';
-import { isNullOrEmpty, plainLowerCaseString } from '../util/util';
+import { Firestore, doc, getDoc, runTransaction } from '@angular/fire/firestore';
+import { isNull, isNullOrEmpty, plainLowerCaseString } from '../util/util';
 import { userProfile } from '../model/types';
-import { Subscription } from 'rxjs';
+import { Observable, Subscription, from, of } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
 })
-export class AuthService implements OnDestroy  {
+export class AuthService implements OnDestroy {
   private auth: Auth = inject(Auth);
-  authState$ = authState(this.auth);
-  authStateSubscription: Subscription;
-  
+  private authState$ = authState(this.auth);
+  private authStateSubscription: Subscription;
+
   constructor(
     private db: Firestore
-  ) 
-  {
+  ) {
     this.authStateSubscription = this.authState$.subscribe((aUser: User | null) => {
       //handle auth state changes here. Note, that user will be null if there is no currently logged in user.
-      this.auth.updateCurrentUser(aUser).then(() => console.log(aUser));
+      console.log("state subscription:", aUser?.email ?? "empty user");
+      //this.auth.updateCurrentUser(aUser).then(() => console.log("state subscription:", aUser?.email ?? "empty user"));
     })
   }
 
@@ -36,6 +38,7 @@ export class AuthService implements OnDestroy  {
     this.authStateSubscription.unsubscribe();
   }
 
+  /* evita propagar l'objecte User, retornant només les propietats necessàries */
   get currentUser(): userProfile | null {
     const usrCurrent = this.auth.currentUser;
     return usrCurrent ?
@@ -45,6 +48,11 @@ export class AuthService implements OnDestroy  {
         "photoURL": usrCurrent.photoURL,
         "emailVerified": usrCurrent.emailVerified
       } as userProfile : null;
+  }
+
+  async refreshCurrentUser(): Promise<userProfile | null> {
+    await this.auth.authStateReady();
+    return this.currentUser;
   }
 
   userHasDisplayName(): boolean {
@@ -57,8 +65,8 @@ export class AuthService implements OnDestroy  {
       const credential = await createUserWithEmailAndPassword(this.auth, email, password);
       if (!credential?.user?.emailVerified) await sendEmailVerification(credential.user);
       return credential;
-    } catch (e) {
-      return null;
+    } catch (error) {
+      throw (error);
     }
   }
 
@@ -67,63 +75,83 @@ export class AuthService implements OnDestroy  {
       await this.auth.setPersistence(browserSessionPersistence);
       const user = await signInWithEmailAndPassword(this.auth, email, password);
       return user;
-    } catch (e) {
-      return null;
+    } catch (error) {
+      //reportError permet registrar errors
+      //reportError({ message: getErrorMessage(error) });
+      //Llancem l'error, perquè tenim una gestió centralitzada d'errors
+      throw (error);
     }
   }
 
-  /* interactive check user display name in GUI */
-  async validUserNewDisplayName(newDisplayName: string) {
+  /* interactive check user display name in GUI for async validator */
+  validUserNewDisplayName(newDisplayName: string): Observable<boolean> {
     try {
       const usrCurrent = this.auth.currentUser;
-      if (usrCurrent && !isNullOrEmpty(newDisplayName)
-        && (!usrCurrent.displayName
-          || plainLowerCaseString(newDisplayName) != plainLowerCaseString(usrCurrent.displayName))) {
-        const newDisplayNameDoc = await getDoc(doc(this.db, "displayNames", newDisplayName));
-        const exists = !newDisplayNameDoc.exists();
-        return exists;
-      } else {
-        return false;
-      }
-    } catch {
-      return false;
+      if (usrCurrent && !isNullOrEmpty(newDisplayName)) {
+        newDisplayName = plainLowerCaseString(newDisplayName);
+        if (!usrCurrent.displayName || newDisplayName != plainLowerCaseString(usrCurrent.displayName)) {
+            return from(getDoc(doc(this.db, "displayNames", newDisplayName)).then((newDisplayNameDoc) => !newDisplayNameDoc.exists()));
+        } else { return of(true); }
+      } else { return of(false); }
+    } catch (error) {
+      throw (error);
     }
   }
 
-  async updateUserProfile(profile: { newDisplayName: string, photoURL: string }) {
-    const usrCurrent = this.auth.currentUser;
-    if (usrCurrent && !isNullOrEmpty(profile.newDisplayName)) {
-        const docSnap = await getDoc(doc(this.db, "users", usrCurrent.uid));
-        //transformació del perfil per valors únics
-        const newDisplayName = plainLowerCaseString(profile.newDisplayName);
-        //L'usuari ja te displayName
-        if (docSnap.exists()) {
-          // Comprovar si s'ha d'actualitzar el displayName
-          // probablement user.displayName = oldDisplayName
-          // però el perfil no s'actualitza en transacció
-          const oldDisplayName = docSnap.data()['displayName'];
-          if (oldDisplayName != newDisplayName) {
-            //se ha de actualizar
-            console.log("before call: ", usrCurrent.uid, oldDisplayName, newDisplayName);
-            await this.updateDisplayName(this.db, usrCurrent.uid, oldDisplayName, newDisplayName);
+  async updateUserProfile(password: string, profile: { newDisplayName: string, photoURL: string }) {
+    const currentUser = this.currentUser;
+    if (currentUser) {
+      const credential = EmailAuthProvider.credential(currentUser.email, password);
+      reauthenticateWithCredential(this.auth.currentUser!, credential);
+      await this.auth.authStateReady();
+      const usrCurrent = this.auth.currentUser;
+      if (usrCurrent && !isNullOrEmpty(profile.newDisplayName)) {
+        try {
+          const docSnap = await getDoc(doc(this.db, "users", usrCurrent.uid));
+          //transformació del perfil per valors únics
+          const newDisplayName = plainLowerCaseString(profile.newDisplayName);
+          //L'usuari ja te displayName
+          if (docSnap.exists()) {
+            // Comprovar si s'ha d'actualitzar el displayName
+            // probablement user.displayName = oldDisplayName
+            // però el perfil no s'actualitza en transacció
+            const oldDisplayName = docSnap.data()['displayName'];
+            if (oldDisplayName != newDisplayName) {
+              //se ha de actualizar
+              console.log("before call: ", usrCurrent.uid, oldDisplayName, newDisplayName);
+              await this.updateDisplayName(this.db, usrCurrent.uid, oldDisplayName, newDisplayName);
+            }
+          } else {
+            // requereix insert
+            // generalmenteel perfil user.displayName està buit
+            // però no s'actualitza en transacció
+            console.log("before call: ", usrCurrent.uid, newDisplayName);
+            await this.insertDisplayName(this.db, usrCurrent.uid, newDisplayName);
           }
-        } else {
-          // requereix insert
-          // generalmenteel perfil user.displayName està buit
-          // però no s'actualitza en transacció
-          console.log("before call: ", usrCurrent.uid, newDisplayName);
-          await this.insertDisplayName(this.db, usrCurrent.uid, newDisplayName);
+          //TRANSACCIÓ AMB èxit (sinó hauria generat error)
+          //En profile es desa el perfil sense transformar
+          this.auth.authStateReady()
+            .then(() => {
+              /* la llibreria no permet esborrar photoURL */
+              if (isNull(profile.photoURL) && !isNull(this.auth.currentUser!.photoURL)) profile.photoURL = "";
+              updateProfile(this.auth.currentUser!, {
+                displayName: profile.newDisplayName, photoURL: profile.photoURL
+              })
+            })
+            .then(() => { console.log("Profile updated!"); });
         }
-        //TRANSACCIÓ AMB èxit (sinó hauria generat error)
-        //En profile es desa el perfil sense transformar
-        this.auth.authStateReady()
-          .then( () => {
-                updateProfile(this.auth.currentUser!, {
-                    displayName: profile.newDisplayName, photoURL: profile.photoURL
-                 }) })
-          .then( () => { console.log("Profile updated!"); });
+        catch (error) {
+          throw (error);
+        }
+      } else {
+        let err = new Error("No user is provided or his displayName is empty.");
+        err.name = "Unauthorized access";
+        throw err;
+      }
     } else {
-      throw Error("Unauthorized access");
+      let err = new Error("No user is provided.");
+      err.name = "Unauthorized access";
+      throw err;
     }
   }
 

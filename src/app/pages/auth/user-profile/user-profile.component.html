@@ -1,0 +1,146 @@
+<app-header [title]="title"></app-header>
+<main class="main">
+    <div class="content">
+        <mat-card class="previsual">
+            <mat-card-header>
+                <mat-card-title>{{pageNames["preview"]}}</mat-card-title>
+            </mat-card-header>
+            <mat-card-content>
+                <img mat-card-avatar class="thumb {{profileImgUrl ? '' : 'greyoutImg'}}" alt="user profile"
+                    src="{{ profileImgUrl ?? 'assets/user-info_icon.svg' }}" />
+                <div class="previewDisplayName">
+                    <h1 class="text-end" id="userName_title">{{displayName?? ('(*) ' + formLabels["displayName"])}}
+                    </h1>
+                    <span id="email_lbl">{{email}}</span>
+                </div>
+            </mat-card-content>
+            <mat-card-actions>
+                <a mat-raised-button [href]="'/change-email'"
+                    [disabled]="userValidated && !currentDisplayNameDefined" color="primary">{{formActions["changeEmail"]}}</a>
+            </mat-card-actions>
+        </mat-card>
+        <div class="grid-container">
+            <form class="grid-container" [style]="'flex-basis:'+(userValidated?'40':'60')+'%;'"
+            [formGroup]="profileForm" (ngSubmit)="submit()">
+            <mat-card class="formCard">
+                <mat-card-header>
+                    @if (!userValidated) {
+                    <h2 class="errorMessage">{{errors["usuariNoValidat"]}}</h2>
+                    <p class="errorMessage">{{errors["usuariNoValidatDetall"]}}
+                    </p>
+                    }
+                </mat-card-header>
+                <mat-card-content>
+                    <div>
+                        <div class="grid">
+                            <mat-form-field>
+                                <mat-label class="form-label" for="newDisplayName">{{formLabels["displayName"]}}: </mat-label>
+                                <input matInput class="form-control" type="text" id="newDisplayName" required
+                                    minlength="2" maxlength="30" autocomplete="nickname" [readonly]="!userValidated"
+                                    (input)="nomInputEvent($event)" formControlName="newDisplayName">
+                                <mat-hint>
+                                    <small>{{hints["displayName"]}}</small>
+                                </mat-hint>
+                                <mat-error>{{errors["displayName"]}}</mat-error>
+                            </mat-form-field>
+                            <mat-form-field>
+                                <mat-label class="form-label" for="photoURL">{{formLabels["imageURL"]}}: </mat-label>
+                                <input matInput class="form-control" type='url' id="photoURL"
+                                    formControlName="photoURL" placeholder="(sense icona)" [readonly]="!userValidated"
+                                    (input)="imgUrlInputEvent($event)" autocomplete="new-url">
+                                <mat-icon matSuffix svgIcon="gravatar" (click)="imgFromGravatar()"></mat-icon>
+                                <mat-icon matSuffix (click)="removeImg()">delete</mat-icon>
+                                <mat-hint>{{hints["imageURL"]}}&nbsp;
+                                    <a href="https://es.gravatar.com/site/login" target="_blank">
+                                        <span class="hintLink">Gravatar.com</span></a>
+                                </mat-hint>
+                            </mat-form-field>
+                        </div>
+                    </div>
+                </mat-card-content>
+                <mat-card-actions>
+                    <div id="send_zone" [hidden]="!readyToSubmit">
+                        <mat-form-field>
+                            <mat-label>{{formLabels['password']}}: </mat-label>
+                            <input matInput [type]="hidePassword ? 'password' : 'text'" placeholder="{{formLabels['password']}}"
+                                formControlName="password" minlength="8" maxlength="24"
+                                [pattern]="pattern" autocomplete="new-password" [readonly]="!userValidated" />
+                            <mat-icon matSuffix (click)="hidePassword = !hidePassword">{{hidePassword ?
+                                'visibility_off' : 'visibility'}}</mat-icon>
+                        </mat-form-field>
+                        <button mat-raised-button id="profile_button" type="submit"
+                            [disabled]="!profileForm.valid || !userValidated">{{formActions["send"]}}</button>
+                    </div>
+                </mat-card-actions>
+            </mat-card>
+        </form>
+        @if (userValidatedWithDisplayname) {
+            <form class="grid-container" [style]="'flex-basis:'+(userValidated?'40':'60')+'%;'"
+            [formGroup]="profileOptionsForm">
+            <mat-card  class="grid-container" class="formCard">
+                <mat-card-header style="display: block;">
+                    <h2 style="text-align: center;">{{hints["nonPublicStaff"]}}</h2>
+                    <p>{{hints["nonPublicStaffDetail"]}}</p>
+                </mat-card-header>
+                <mat-card-content>
+                    <img src='{{langFlag}}' style="width: 3rem;margin: 4px;">
+                    <mat-form-field>
+                        <mat-label>Idioma</mat-label>
+                        <mat-select [(value)]="idioma">
+                            @for (idioma of idiomes; track idioma.value) {
+                                <mat-option [value]="idioma.value">
+                                    <img src='{{idioma.img}}' style="width: 3rem;margin:4px; vertical-align:middle;"> {{idioma.viewValue}}
+                                </mat-option>                                        
+                            }
+                        </mat-select>
+                    </mat-form-field>
+                                          <!-- TODO -->
+                    <!-- TODO (idioma) -->
+                    <!-- TODO -->
+                    <!-- TODO: definir nom dels tabs -->
+                    <!-- tabs per a omplir amb:
+                        1) idioma: probablement en el primer formulari
+                        2) fins a tres perfils dietetics
+                    -->
+                    <mat-form-field style="width: 100%;">
+                        <mat-label class="form-label" for="firstProfile">{{formLabels['firstProfile']}}: </mat-label>
+                        <input matInput class="form-control" type='url' [(ngModel)]="firstProfileName"
+                            formControlName="firstProfile" placeholder="{{hints['firstProfile']}}">
+                    </mat-form-field>
+                    @if (!!firstProfileName) {
+                        <mat-form-field style="width: 100%;">
+                            <mat-label class="form-label" for="secondProfile">{{formLabels['secondProfile']}}: </mat-label>
+                            <input matInput class="form-control" type='url'  [(ngModel)]="secondProfileName"
+                                formControlName="secondProfile" placeholder="{{hints['secondProfile']}}">
+                        </mat-form-field>
+                        @if (!!secondProfileName) {
+                            <mat-form-field style="width: 100%;">
+                                <mat-label class="form-label" for="thirdProfile">{{formLabels['thirdProfile']}}: </mat-label>
+                                <input matInput class="form-control" type='url' [(ngModel)]="thirdProfileName"
+                                    formControlName="thirdProfile" placeholder="{{hints['thirdProfile']}}">
+                            </mat-form-field>
+                        }
+                    }
+                    <mat-tab-group>
+                        @if (!!firstProfileName) {
+                            <mat-tab label="{{firstProfileName}}"> perfil dietetic 1 </mat-tab>
+                            @if (!!secondProfileName) {
+                                <mat-tab label="{{secondProfileName}}"> perfil dietetic 2 </mat-tab>
+                                @if (!!thirdProfileName) {
+                                    <mat-tab label="{{thirdProfileName}}"> perfil dietetic 3 </mat-tab>
+                                }
+                            }
+                        }
+                    </mat-tab-group>
+                </mat-card-content>
+                </mat-card>
+            </form>
+        }
+    </div>
+        @if (userValidated) {
+            <div class="divider" role="separator" aria-label="Divider"></div>
+            <app-lateral-menu></app-lateral-menu>
+        }
+    </div>
+</main>
+<app-footer></app-footer>

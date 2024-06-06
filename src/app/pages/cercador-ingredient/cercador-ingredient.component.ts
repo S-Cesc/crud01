@@ -13,11 +13,9 @@ import { FooterComponent } from '../../shared/components/footer/footer.component
 })
 export class CercadorIngredientComponent {
   title: string;
-  errorTextHTML: string;
 
   constructor() {
     this.title = "Cercador d'ingredients";
-    this.errorTextHTML = "";
   }
 
 }

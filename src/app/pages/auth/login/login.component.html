@@ -1,0 +1,40 @@
+<app-header></app-header>
+<main class="main">
+    <div class="content">
+        <form class="grid-container" (ngSubmit)="login()" [formGroup]="credentials">
+            <mat-card>
+                <mat-card-header>
+                    <h2>{{pageNames["login"]}}</h2>                    
+                </mat-card-header>
+                <mat-card-content>
+                    <mat-form-field id="email">
+                        <mat-label>{{formLabels['email']}}: </mat-label>
+                        <input matInput type="email" placeholder="{{hints['email']}}" formControlName="email" />
+                        <mat-error>{{errors['email']}}</mat-error>
+                    </mat-form-field>
+                    <mat-form-field id="password">
+                        <mat-label>{{formLabels['password']}}: </mat-label>
+                        <input matInput [type]="hidePassword ? 'password' : 'text'" placeholder="{{formLabels['password']}}"
+                            formControlName="password" minlength="8" maxlength="32" [pattern]="pattern" />
+                        <mat-icon matSuffix (click)="hidePassword = !hidePassword">{{hidePassword ? 'visibility_off' :
+                            'visibility'}}</mat-icon>
+                        <mat-hint>{{errors['password']}}</mat-hint>
+                        <mat-error>{{errors['password']}}</mat-error>
+                    </mat-form-field>
+                    <div id="footer">
+                        <mat-hint>{{hints['registerRequired']}}
+                            Podeu llegir les <a [routerLink]="['/condicions']" target="_blank">condicions</a>.                            
+                        </mat-hint>
+                    </div>
+                </mat-card-content>
+                <mat-card-actions>
+                    <button mat-raised-button type="submit" [disabled]="!credentials.valid"
+                        color="accent" expand="block">{{formActions['signin']}}</button>
+                    <a mat-raised-button [href]="'/register'" color="primary">{{formActions['signup']}}</a>
+                    <a mat-raised-button [href]="'/recovery'" color="primary">{{formActions['passwordRecover']}}</a>
+                </mat-card-actions>
+            </mat-card>
+        </form>
+    </div>
+</main>
+<app-footer></app-footer>

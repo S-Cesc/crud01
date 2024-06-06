@@ -7,6 +7,7 @@ import { HeaderComponent } from '../../shared/components/header/header.component
 import { LateralMenuComponent } from '../../shared/components/lateral-menu/lateral-menu.component';
 import { FooterComponent } from '../../shared/components/footer/footer.component';
 import { serviceStatusResult } from '../../model/services-addons';
+import { errorMessages } from '../../util/errors';
 
 @Component({
   selector: 'app-ingredient-detail',
@@ -18,15 +19,15 @@ import { serviceStatusResult } from '../../model/services-addons';
 export class IngredientDetailComponent implements OnInit {
   title: string;
   ing!: IIngredient;
-  errorTextHTML: string;
   private ingredientsService: IngredientsService;
  
   constructor(private router: Router, 
               private activateRoute: ActivatedRoute) {
     this.ingredientsService = inject(IngredientsService);
     this.title = 'Editar ingredient';
-    this.errorTextHTML = "";
   }
+
+  errors = errorMessages;
 
   ngOnInit(): void {
     this.activateRoute.params.subscribe(params => {
@@ -35,17 +36,27 @@ export class IngredientDetailComponent implements OnInit {
   }
 
   saveIngredient(ingredient?: IIngredient) {
-    if (ingredient === undefined) {
-      this.router.navigate(['/ingredients']);
+//TODO - servei asíncron
+//El servei ha de retornar un observable
+// saveIngredient() {
+//  this.service.saveIngredient().subscribe((results) => {
+//    console.log('Data is received - Result - ', results);
+//    this.data = results.results;
+//  })
+//}
+// compte cas ingredient === undefined (cancel)
+//TODO - bloqueig del botó
+
+  if (ingredient === undefined) {
+      this.router.navigate(['/private/ingredients']);
     } else {
-      const r = this.ingredientsService.saveIngredient(ingredient);
-      switch (r) {
-        case serviceStatusResult.ok: 
-          this.router.navigate(['/ingredients']);
-          break;
-        default:
-          this.errorTextHTML = r.toString();
+        const r = this.ingredientsService.saveIngredient(ingredient);
+        if (r != serviceStatusResult.ok) {
+          const err = new Error(r); //r.toString()
+          err.name = this.errors["ingredientsServiceError"];
+          throw err;
         }
     }
   }
+
 }

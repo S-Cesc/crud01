@@ -1,0 +1,61 @@
+<app-header></app-header>
+<main class="main">
+    <div class="content">
+        <form class="grid-container" (ngSubmit)="register()" [formGroup]="credentials">
+            <mat-card>
+                <mat-card-header>
+                    <h2>{{pageNames["register"]}}</h2>                    
+                </mat-card-header>
+                <mat-card-content>
+                    <div id="emailGroup" formGroupName="emailGroup">
+                        <mat-form-field id="email">
+                            <mat-label>{{formLabels['email']}}: </mat-label>
+                            <input matInput type="email" placeholder="{{hints['email']}}" formControlName="email" [readonly]="wait" />
+                            <mat-error>{{errors['email']}}</mat-error>
+                        </mat-form-field>
+                        <mat-form-field id="email-again">
+                            <mat-label>{{formLabels['emailAgain']}}: </mat-label>
+                            <input matInput type="email" placeholder="{{hints['emailAgain']}}" formControlName="emailAgain"
+                                 [readonly]="wait" [errorStateMatcher]="confirmValidParentMatcher" />
+                            <mat-hint>{{hints['emailAgain']}}</mat-hint>
+                            <mat-error>{{errors['emailAgain']}}</mat-error>
+                        </mat-form-field>
+                    </div>
+                    <div formGroupName="passwordGroup">
+                        <mat-form-field id="password">
+                            <mat-label>{{formLabels['password']}}: </mat-label>
+                            <input matInput [type]="hidePassword ? 'password' : 'text'" placeholder="{{hints['password']}}"
+                                formControlName="password" minlength="8" maxlength="32" [pattern]="pattern" [readonly]="wait" />
+                            <mat-icon matSuffix (click)="hidePassword = !hidePassword">{{hidePassword ? 'visibility_off' :
+                                'visibility'}}</mat-icon>
+                            <mat-hint>{{errors['password']}}</mat-hint>
+                            <mat-error>{{errors['password']}}</mat-error>
+                        </mat-form-field>
+                        <mat-form-field id="password-again">
+                            <mat-label>{{formLabels['passwordAgain']}}: </mat-label>
+                            <input matInput [type]="hidePasswordAgain ? 'password' : 'text'" placeholder="{{hints['passwordAgain']}}"
+                                formControlName="passwordAgain" minlength="8" maxlength="32"
+                                [pattern]="pattern" [errorStateMatcher]="confirmValidParentMatcher" [readonly]="wait" />
+                            <mat-icon matSuffix (click)="hidePasswordAgain = !hidePasswordAgain">{{hidePasswordAgain ? 'visibility_off' :
+                                'visibility'}}</mat-icon>
+                            <mat-hint>{{hints['passwordAgain']}}</mat-hint>
+                            <mat-error>{{errors['passwordAgain']}}</mat-error>
+                        </mat-form-field>
+                    </div>
+                    <div id="footer">
+                        <mat-hint>{{hints['registerRequired']}}
+                            Podeu llegir les <a [routerLink]="['/condicions']" target="_blank">condicions</a>.                            
+                        </mat-hint>
+                    </div>
+                </mat-card-content>
+                <mat-card-actions>
+                    <button mat-raised-button type="submit" [disabled]="!credentials.valid || wait"
+                        color="accent" expand="block">{{formActions['signup']}}</button>
+                    <a mat-raised-button [href]="'/login'" color="primary">{{formActions['signin']}}</a>
+                    <a mat-raised-button [href]="'/recovery'" color="primary">{{formActions['passwordRecover']}}</a>
+                </mat-card-actions>
+            </mat-card>
+        </form>
+    </div>
+</main>
+<app-footer></app-footer>

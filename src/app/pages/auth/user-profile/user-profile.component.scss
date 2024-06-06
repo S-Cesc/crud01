@@ -1,0 +1,54 @@
+mat-hint>small {
+    font-size: x-small;
+}
+.hintLink {
+    color: rgb(33, 37, 41);
+}
+
+/* previsual */
+.content .previsual {
+    flex-basis: 20%;
+    margin-bottom: 2em;
+    background-color: var(--teal-2);
+}
+.previewDisplayName {
+    margin-right: 5em;
+}
+.previewDisplayName>h1 {
+    margin-bottom: 0px;
+}
+
+/* formCard */
+.content .formCard {
+    background-color: var(--teal-1);
+    max-width: 28rem;
+}
+.grid>mat-form-field {
+    width: 25rem;
+}
+.grid>mat-form-field:first-of-type {
+    margin-bottom: 1em;
+}
+.grid>mat-form-field:first-of-type>mat-label {
+    margin-top: 55px;
+}
+
+/* send_zone inside formCard */
+#send_zone {
+    padding: 15px;
+    border-style: solid;
+    border-color: var(--teal);
+    width: 25em;
+}
+#send_zone>mat-form-field {
+    width: 100%;
+}
+#send_zone>button {
+    background: var(--bs-teal);
+    margin-top: 20px;
+}
+
+/* lateral menu */
+.content app-lateral-menu {
+    flex-basis:20%;
+}

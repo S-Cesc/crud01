@@ -21,7 +21,6 @@ import { serviceStatusResult } from '../../model/services-addons';
 export class IngredientsComponent implements OnInit {
   ingredientsService = inject(IngredientsService);
   title: string ;
-  errorTextHTML?: string;
   ingredients!: IIngredient[];
 
   constructor(private router: Router) {
@@ -46,7 +45,8 @@ export class IngredientsComponent implements OnInit {
       if (status == serviceStatusResult.ok) {
         this.ngOnInit();
       } else {
-        this.errorTextHTML = `<b>ERROR</b>: ${status}`;
+        // TODO
+        //this.errorTextHTML = `<b>ERROR</b>: ${status}`;
       }
     }
   }

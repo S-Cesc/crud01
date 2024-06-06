@@ -14,8 +14,7 @@ import { userProfile } from '../../../model/types';
 export class HeaderComponent {
   authService = inject(AuthService);
   
-  @Input({ required: true }) title!: string;
-  @Input() errorTextHTML?: string;
+  @Input() title?: string;
 
   constructor(private router: Router) { }
 
@@ -28,12 +27,12 @@ export class HeaderComponent {
   }
 
   get isLoggedIn(): boolean {
-    return this.currentUser?.emailVerified ?? false;
+    return !!this.currentUser;
   }
 
   clicUserProfile() {
     if (this.isLoggedIn) {
-      this.router.navigate(['private/user-profile']);
+      this.router.navigate(['/user-profile']);
     } else {
       this.router.navigate(['login']);
     }

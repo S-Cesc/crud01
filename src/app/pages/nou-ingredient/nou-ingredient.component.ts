@@ -21,43 +21,36 @@ import { Router } from '@angular/router';
 export class NouIngredientComponent {
   title: string;
   ingredientsService: IngredientsService;
-  errorTextHTML: string;
   textHTML: string;
-  clearForm: boolean;
   
-
-
   constructor(private router: Router) {
     this.ingredientsService = inject(IngredientsService);
     this.title = 'Nou ingredient';
-    this.errorTextHTML = "";
     this.textHTML = "";
-    this.clearForm = false;
   }
 
   onSubmitIngredient(ing?: IIngredient) {
+//TODO - servei asíncron
+//El servei ha de retornar un observable
+// saveIngredient() {
+//  this.service.saveIngredient().subscribe((results) => {
+//    console.log('Data is received - Result - ', results);
+//    this.data = results.results;
+//  })
+//}
+//TODO - bloqueig del botó
+
     if (ing === undefined) {
-      this.router.navigate(['/ingredients']);
+      this.router.navigate(['/private/ingredients']);
     } else {
       const nom = ing.nom;
       const result = this.ingredientsService.insertIngredient(ing);
       if (result === serviceStatusResult.ok) {
         this.textHTML = `L'ingredient <b>${nom}</b> s'ha desat.`;
-        this.errorTextHTML = "";
-        this.clearForm = true;
       } else {
-        this.errorTextHTML = `<b>ERROR</b>: ${result}`
-        this.textHTML = "";
-        this.clearForm = false;
+        // TODO
+        //this.errorTextHTML = `<b>ERROR</b>: ${result}`
       }
-    }
-  }
-
-  onFormChanged() {
-    if (this.clearForm) {
-      this.errorTextHTML = "";
-      this.textHTML = "";
-      this.clearForm = false;
     }
   }
 

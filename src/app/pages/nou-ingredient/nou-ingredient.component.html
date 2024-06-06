@@ -1,12 +1,10 @@
-<app-header [title]="title" [errorTextHTML]="errorTextHTML"></app-header>
+<app-header [title]="title"></app-header>
 <main class="main">
   <div class="content">
     <div class="left-side">
       <app-form-ingredient
           [textHTML] = "textHTML"
-          [clearForm] = "clearForm"
-          (submitIngredient)="onSubmitIngredient($event)"
-          (formChanged)="onFormChanged()">
+          (submitIngredient)="onSubmitIngredient($event)">
       </app-form-ingredient>
     </div>
     <div class="divider" role="separator" aria-label="Divider"></div>
