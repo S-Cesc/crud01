@@ -52,8 +52,8 @@
                 <mat-card-actions>
                     <button mat-raised-button type="submit" [disabled]="!credentials.valid || wait"
                         color="accent" expand="block">{{formActions['signup']}}</button>
-                    <a mat-raised-button [href]="'/login'" color="primary">{{formActions['signin']}}</a>
-                    <a mat-raised-button [href]="'/recovery'" color="primary">{{formActions['passwordRecover']}}</a>
+                    <a mat-raised-button [href]="'login'" color="primary">{{formActions['signin']}}</a>
+                    <a mat-raised-button [href]="'recovery'" color="primary">{{formActions['passwordRecover']}}</a>
                 </mat-card-actions>
             </mat-card>
         </form>

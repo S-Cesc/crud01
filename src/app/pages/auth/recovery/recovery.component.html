@@ -26,8 +26,8 @@
                     <button mat-raised-button type="submit" [disabled]="!credentials.valid || wait"
                         color="accent" expand="block">{{!!currentUser? formActions['changePassword'] : formActions['recovery']}}</button>
                         @if (!currentUser) {
-                            <a mat-raised-button [href]="'/login'" color="primary">{{formActions['signin']}}</a>
-                            <a mat-raised-button [href]="'/register'" color="primary">{{formActions['signup']}}</a>
+                            <a mat-raised-button [href]="'login'" color="primary">{{formActions['signin']}}</a>
+                            <a mat-raised-button [href]="'register'" color="primary">{{formActions['signup']}}</a>
                         }
                 </mat-card-actions>
             </mat-card>

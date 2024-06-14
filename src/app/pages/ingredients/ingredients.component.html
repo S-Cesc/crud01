@@ -5,7 +5,7 @@
       <ul class="ingredients">
         <li *ngFor="let ingredient of ingredients" >
           <div>
-            <a routerLink="/private/ingredient-detail/{{ingredient.id}}">
+            <a routerLink="private/ingredient-detail/{{ingredient.id}}">
                 <span class="badge">
                   @if (hasId(ingredient)) {
                     {{ingredient.id}}
