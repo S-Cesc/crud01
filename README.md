@@ -16,6 +16,11 @@ Run `ng generate component component-name` to generate a new component. You can 
 
 Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory.
 
+## Add Firestore features
+
+Run `ng add @angular/fire` to add features to the project
+(Authentication, Firestore, AppCheck, Google Analitycs, Cloud Functions, Cloud Messaging, Realtime Database... )
+
 ## Deploy
 
 Run `ng deploy --base-href=/recull-receptes/` to deploy into github pages.
